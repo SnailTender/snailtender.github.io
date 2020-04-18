@@ -1,5 +1,23 @@
 // Game state
 let gs = {
+  button: {
+    img: null,
+    x: 0,
+    y: 0,
+    r: 0,
+  },
+  monitor: {
+    img: null,
+    x: 0,
+    y: 0,
+    r: 0,
+  },
+  desk: {
+    img: null,
+    x: 0,
+    y: 0,
+    r: 0,
+  },
   timer: {
     elapsed: 0,
     ticking: false,
@@ -9,25 +27,15 @@ let gs = {
 }
 
 function preload() {
+  gs.monitor.img = loadImage('assets/images/monitor.png');
+  gs.desk.img = loadImage('assets/images/desk.png');
 }
 
 function setup() {
   createCanvas(windowWidth, windowWidth*9/16);
 
-  gs.button = {
-    img: null,
-    x: width/50*26,
-    y: height/10*7,
-    r: height/15,
-  };
-
-  gs.monitor = {
-    img: loadImage('assets/images/monitor.png'),
-  }
-
-  gs.desk = {
-    img: loadImage('assets/images/desk.png'),
-  }
+  // Initialize objects on screen
+  resizeButton();
 
   // timer ticks every second
   setInterval(function() {
@@ -35,6 +43,12 @@ function setup() {
       gs.timer.elapsed += 1;
     }
   }, 1000)
+}
+
+function resizeButton() {
+  gs.button.x = width/50*26;
+  gs.button.y = height/10*7;
+  gs.button.r = height/15;
 }
 
 function draw() {
@@ -104,7 +118,5 @@ function windowResized() {
   resizeCanvas(windowWidth, windowWidth*9/16);
 
   // resize button
-  gs.button.x = width/50*26;
-  gs.button.y = height/10*7;
-  gs.button.r = height/15;
+  resizeButton();
 }
