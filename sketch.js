@@ -1,32 +1,35 @@
-
-// Images
-let monitorImg;
-let deskImg;
-
 // Game state
 let gs = {
-  button: {
-    x: 300,
-    y: 250,
-    r: 30
-  },
   timer: {
     elapsed: 0,
     ticking: false,
     max: 10,
   },
   lost: false,
-  touchingButton: false,
 }
 
 function preload() {
-  monitorImg = loadImage('assets/images/monitor.png');
-  deskImg = loadImage('assets/images/desk.png');
 }
 
 function setup() {
-  createCanvas(600, 400);
+  createCanvas(windowWidth, windowWidth*9/16);
 
+  gs.button = {
+    img: null,
+    x: width/50*26,
+    y: height/10*7,
+    r: height/15,
+  };
+
+  gs.monitor = {
+    img: loadImage('assets/images/monitor.png'),
+  }
+
+  gs.desk = {
+    img: loadImage('assets/images/desk.png'),
+  }
+
+  // timer ticks every second
   setInterval(function() {
     if (gs.timer.ticking) {
       gs.timer.elapsed += 1;
@@ -51,8 +54,8 @@ if (isHoldingButton()) {
 }
 
 // Drawings
-  image(deskImg, 225, 110, 150, 100);
-  image(monitorImg, 225, 110, 150, 100);
+  image(gs.desk.img, 0, 0, width, height);
+  image(gs.monitor.img, 0, 0, width, height);
   drawButton();
   drawHand();
   drawTimer();
@@ -95,4 +98,13 @@ function drawTimer() {
 	strokeWeight(10);
   x = map(gs.timer.elapsed, 0, gs.timer.max, 0 , width);
 	line(0, 0, x, 0);
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowWidth*9/16);
+
+  // resize button
+  gs.button.x = width/50*26;
+  gs.button.y = height/10*7;
+  gs.button.r = height/15;
 }
