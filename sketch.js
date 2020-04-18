@@ -4,14 +4,20 @@ let monitorImg;
 let deskImg;
 
 // Game state
-let button = {
-  x: 300,
-  y: 250,
-  r: 30
+let gs = {
+  button: {
+    x: 300,
+    y: 250,
+    r: 30
+  },
+  timer: {
+    elapsed: 0,
+    ticking: false,
+    max: 10,
+  },
+  lost: false,
+  touchingButton: false,
 }
-let touchingButton = false;
-let timer;
-let lose = false;
 
 function preload() {
   monitorImg = loadImage('assets/images/monitor.png');
@@ -20,30 +26,36 @@ function preload() {
 
 function setup() {
   createCanvas(600, 400);
-  t = setTimeout(function() {
-    lose = true;
-  }, 10000); 
+
+  setInterval(function() {
+    if (gs.timer.ticking) {
+      gs.timer.elapsed += 1;
+    }
+  }, 1000)
 }
 
 function draw() {
   background(220);
 
-  if (lose) {
+  if (gs.lost) {
     text("Time out!", 10, 10, 70, 80);
     return;
   }
 
 // Logic
-if (mouseIsPressed && isPointInCircle(mouseX, mouseY, button.x, button.y, button.r)) {
-  touchingButton = true;
+if (isHoldingButton()) {
+  gs.timer.ticking = false;
+  gs.timer.elapsed = 0;
+} else {
+  gs.timer.ticking = true;
 }
-
 
 // Drawings
   image(deskImg, 225, 110, 150, 100);
   image(monitorImg, 225, 110, 150, 100);
   drawButton();
   drawHand();
+  drawTimer();
 }
 
 function isPointInCircle(x, y, cx, cy, radius) {
@@ -52,7 +64,7 @@ function isPointInCircle(x, y, cx, cy, radius) {
 }
 
 function drawButton() {
-  if (mouseIsPressed && isPointInCircle(mouseX, mouseY, button.x, button.y, button.r)) {
+  if (isHoldingButton()) {
     let red = color(255, 0, 0);
     fill(red);
   } else {
@@ -61,7 +73,7 @@ function drawButton() {
   }
   
   noStroke();
-  ellipse(button.x, button.y, button.r, button.r);
+  ellipse(gs.button.x, gs.button.y, gs.button.r, gs.button.r);
 }
 
 function drawHand() {
@@ -70,8 +82,17 @@ function drawHand() {
   ellipse(mouseX, mouseY, 5, 5);
 }
 
-function mouseReleased() {
-  if (touchingButton) {
-    touchingButton = false;
+function isHoldingButton() {
+  if (mouseIsPressed && isPointInCircle(mouseX, mouseY, gs.button.x, gs.button.y, gs.button.r)){
+    return true;
   }
+
+  return false;
+}
+
+function drawTimer() {
+  stroke(255, 0, 0);
+	strokeWeight(10);
+  x = map(gs.timer.elapsed, 0, gs.timer.max, 0 , width);
+	line(0, 0, x, 0);
 }
