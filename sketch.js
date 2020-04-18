@@ -1,5 +1,5 @@
 // Game state
-let gs = {};
+let gs;
 
 function preload() {
     // Ensure the .ttf or .otf font stored in the assets directory
@@ -21,6 +21,8 @@ function setup() {
     createCanvas(canvasWidth, canvasHeight);
 
     // Initialize gamestate
+    gs = {};
+
     gs.button = new Button(
         buttonImg,
         buttonImgPressed,
@@ -61,7 +63,11 @@ function draw() {
         text("Time out!", width / 2, height / 2);
 
         textSize(40);
-        text("\n\n\nTry again?", width / 2, height / 2);
+        text("\n\n\nClick to try again", width / 2, height / 2);
+
+        if (mouseIsPressed) {
+            setup();
+        }
         return;
     }
 
