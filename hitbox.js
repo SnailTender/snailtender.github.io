@@ -4,12 +4,12 @@ function HitBox(x, y, r) {
     this.y = y;
     this.r = r;
 
-    this.isTouchingMouse = function() {
+    this.isTouchingMouse = function () {
         var distancesquared = (mouseX - this.x) * (mouseX - this.x) + (mouseY - this.y) * (mouseY - this.y);
         return distancesquared <= this.r * this.r;
     }
-    
-    this.isPressed = function() {
+
+    this.isPressed = function () {
         return this.isTouchingMouse() && mouseIsPressed;
     }
 }

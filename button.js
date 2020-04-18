@@ -3,7 +3,7 @@ function Button(img, imgPressed, hitbox) {
     this.imgPressed = imgPressed;
     this.hb = hitbox;
 
-    this.draw = function() {
+    this.draw = function () {
         if (this.hb.isPressed()) {
             image(this.imgPressed, this.hb.x - this.imgPressed.width / 2, this.hb.y - this.imgPressed.height / 2);
         } else {
@@ -11,7 +11,7 @@ function Button(img, imgPressed, hitbox) {
         }
     }
 
-    this.resize = function(canvasWdith, canvasHeight) {
+    this.resize = function (canvasWdith, canvasHeight) {
         this.hb = new HitBox(canvasWidth / 50 * 26, canvasHeight / 10 * 7, canvasHeight / 15);
-    }    
+    }
 }

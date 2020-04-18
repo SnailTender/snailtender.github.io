@@ -5,16 +5,16 @@ function Timer(maxMS, tickMS) {
     this.tickMS = tickMS;
     this.done = false;
 
-    this.pause = function() {
+    this.pause = function () {
         this.ticking = false;
     };
 
-    this.reset = function() {
+    this.reset = function () {
         this.pause();
         this.elapsed = 0;
     };
 
-    this.resume = function() {
+    this.resume = function () {
         this.ticking = true;
     };
 
