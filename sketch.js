@@ -15,6 +15,8 @@ function setup() {
     buttonImgPressed = loadImage('assets/images/buttonPress.png');
     fingerImg = loadImage('assets/images/fingerPoint.png');
     fingerImgPressed = loadImage('assets/images/fingerPress.png');
+    alarmImg = loadImage('assets/images/alarmclock.png');
+    clock12Img = loadImage('assets/images/clock12.png');
 
     canvasWidth = 1280;
     canvasHeight = 720;
@@ -41,6 +43,12 @@ function setup() {
     gs.monitor = {
         img: monitorImg,
     };
+
+    gs.clock = {
+        img: alarmImg,
+        img12: clock12Img,
+        timer: new Timer(0, 500),
+    }
 
     // main game timer ticks every second and ends at 4 seconds
     gs.timer = new Timer(4000, 1000);
@@ -78,13 +86,24 @@ function draw() {
         gs.timer.resume();
     }
 
+    gs.clock.timer.resume();
+
     // Drawings
     image(gs.desk.img, 0, 0, width, height);
     image(gs.monitor.img, 0, 0, width, height);
 
     gs.button.draw();
-    drawHand();
+
     gs.timer.drawTop();
+
+    image(gs.clock.img, 0, 0);
+    console.log(gs.clock.timer)
+    if (gs.clock.timer.elapsed % 1000 == 0) {
+        image(gs.clock.img12, 0, 0);
+    }
+
+    // Draw hand last
+    drawHand();
 }
 
 function drawHand() {
