@@ -1,4 +1,9 @@
-let computerImg;
+
+// Images
+let monitorImg;
+let deskImg;
+
+// Game state
 let button = {
   x: 300,
   y: 250,
@@ -9,7 +14,8 @@ let timer;
 let lose = false;
 
 function preload() {
-  computerImg = loadImage('assets/images/computer.png');
+  monitorImg = loadImage('assets/images/monitor.png');
+  deskImg = loadImage('assets/images/desk.png');
 }
 
 function setup() {
@@ -34,7 +40,8 @@ if (mouseIsPressed && isPointInCircle(mouseX, mouseY, button.x, button.y, button
 
 
 // Drawings
-  image(computerImg, 225, 110, 150, 100);
+  image(deskImg, 225, 110, 150, 100);
+  image(monitorImg, 225, 110, 150, 100);
   drawButton();
   drawHand();
 }
