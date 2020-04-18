@@ -32,6 +32,11 @@ let gs = {
 }
 
 function preload() {
+  // Ensure the .ttf or .otf font stored in the assets directory
+  // is loaded before setup() and draw() are called
+  font = loadFont('assets/font/SegoePrint.ttf');
+
+  //Images
   gs.monitor.img = loadImage('assets/images/monitor.png');
   gs.desk.img = loadImage('assets/images/desk.png');
   gs.button.img = loadImage('assets/images/buttonOff.png');
@@ -47,36 +52,47 @@ function setup() {
   resizeButton();
 
   // timer ticks every second
-  setInterval(function() {
+  setInterval(function () {
     if (gs.timer.ticking) {
       gs.timer.elapsed += 1;
     }
+
+    if (gs.timer.elapsed >= gs.timer.max) {
+      gs.lost = true;
+    }
   }, 1000)
+
+    // Set text characteristics
+    textFont(font);
+    textSize(80);
+    textAlign(CENTER, CENTER);
 }
 
 function resizeButton() {
-  gs.button.x = width/50*26;
-  gs.button.y = height/10*7;
-  gs.button.r = height/15;
+  gs.button.x = width / 50 * 26;
+  gs.button.y = height / 10 * 7;
+  gs.button.r = height / 15;
 }
 
 function draw() {
   background(220);
 
   if (gs.lost) {
-    text("Time out!", 10, 10, 70, 80);
+    stroke(0, 0, 0);
+    strokeWeight(1);
+    text("Time out!", width/2, height/2);
     return;
   }
 
-// Logic
-if (isHoldingButton()) {
-  gs.timer.ticking = false;
-  gs.timer.elapsed = 0;
-} else {
-  gs.timer.ticking = true;
-}
+  // Logic
+  if (isHoldingButton()) {
+    gs.timer.ticking = false;
+    gs.timer.elapsed = 0;
+  } else {
+    gs.timer.ticking = true;
+  }
 
-// Drawings
+  // Drawings
   image(gs.desk.img, 0, 0, width, height);
   image(gs.monitor.img, 0, 0, width, height);
   drawButton();
@@ -91,22 +107,22 @@ function isPointInCircle(x, y, cx, cy, radius) {
 
 function drawButton() {
   if (isHoldingButton()) {
-    image(gs.button.imgPressed, gs.button.x - gs.button.imgPressed.width/2, gs.button.y - gs.button.imgPressed.height/2);
+    image(gs.button.imgPressed, gs.button.x - gs.button.imgPressed.width / 2, gs.button.y - gs.button.imgPressed.height / 2);
   } else {
-    image(gs.button.img, gs.button.x - gs.button.img.width/2, gs.button.y - gs.button.img.height/2);
+    image(gs.button.img, gs.button.x - gs.button.img.width / 2, gs.button.y - gs.button.img.height / 2);
   }
 }
 
 function drawHand() {
   if (mouseIsPressed) {
-    image(gs.finger.imgPressed, mouseX - gs.finger.imgPressed.width/10, mouseY - gs.finger.imgPressed.height/10);
+    image(gs.finger.imgPressed, mouseX - gs.finger.imgPressed.width / 10, mouseY - gs.finger.imgPressed.height / 10);
   } else {
-    image(gs.finger.img, mouseX - gs.finger.img.width/10, mouseY - gs.finger.img.height/10);
+    image(gs.finger.img, mouseX - gs.finger.img.width / 10, mouseY - gs.finger.img.height / 10);
   }
 }
 
 function isHoldingButton() {
-  if (mouseIsPressed && isPointInCircle(mouseX, mouseY, gs.button.x, gs.button.y, gs.button.r)){
+  if (mouseIsPressed && isPointInCircle(mouseX, mouseY, gs.button.x, gs.button.y, gs.button.r)) {
     return true;
   }
 
@@ -114,8 +130,8 @@ function isHoldingButton() {
 }
 
 function drawTimer() {
-  stroke(255, 0, 0);
-	strokeWeight(10);
-  x = map(gs.timer.elapsed, 0, gs.timer.max, 0 , width);
-	line(0, 0, x, 0);
+  stroke(0, 0, 0);
+  strokeWeight(10);
+  x = map(gs.timer.elapsed, 0, gs.timer.max, 0, width);
+  line(0, 0, x, 0);
 }
