@@ -1,7 +1,12 @@
 // Game state
 let gs = {
+  finger: {
+    img: null,
+    imgPressed: null,
+  },
   button: {
     img: null,
+    imgPressed: null,
     x: 0,
     y: 0,
     r: 0,
@@ -29,11 +34,15 @@ let gs = {
 function preload() {
   gs.monitor.img = loadImage('assets/images/monitor.png');
   gs.desk.img = loadImage('assets/images/desk.png');
+  gs.button.img = loadImage('assets/images/buttonOff.png');
+  gs.button.imgPressed = loadImage('assets/images/buttonPress.png');
+  gs.finger.img = loadImage('assets/images/fingerPoint.png');
+  gs.finger.imgPressed = loadImage('assets/images/fingerPress.png');
+
 }
 
 function setup() {
-  createCanvas(windowWidth, windowWidth*9/16);
-
+  createCanvas(1280, 720);
   // Initialize objects on screen
   resizeButton();
 
@@ -82,21 +91,18 @@ function isPointInCircle(x, y, cx, cy, radius) {
 
 function drawButton() {
   if (isHoldingButton()) {
-    let red = color(255, 0, 0);
-    fill(red);
+    image(gs.button.imgPressed, gs.button.x - gs.button.imgPressed.width/2, gs.button.y - gs.button.imgPressed.height/2);
   } else {
-    let blue = color(0, 0, 255);
-    fill(blue);
+    image(gs.button.img, gs.button.x - gs.button.img.width/2, gs.button.y - gs.button.img.height/2);
   }
-  
-  noStroke();
-  ellipse(gs.button.x, gs.button.y, gs.button.r, gs.button.r);
 }
 
 function drawHand() {
-  let blue = color(255, 255, 255);
-  fill(blue);
-  ellipse(mouseX, mouseY, 5, 5);
+  if (mouseIsPressed) {
+    image(gs.finger.imgPressed, mouseX - 30, mouseY - 100);
+  } else {
+    image(gs.finger.img, mouseX - 50, mouseY - 100);
+  }
 }
 
 function isHoldingButton() {
@@ -112,11 +118,4 @@ function drawTimer() {
 	strokeWeight(10);
   x = map(gs.timer.elapsed, 0, gs.timer.max, 0 , width);
 	line(0, 0, x, 0);
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowWidth*9/16);
-
-  // resize button
-  resizeButton();
 }
