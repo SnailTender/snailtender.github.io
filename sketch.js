@@ -2,6 +2,7 @@
 let gs;
 let alarmClock;
 let glassesGuy;
+let flyBug;
 const canvasWidth = 1280;
 const canvasHeight = 720;
 
@@ -31,6 +32,10 @@ function setup() {
     monitorDisplayImg2 = loadImage("assets/images/snail2.png");
     monitorDisplayImg3 = loadImage("assets/images/snail3.png");
     monitorDisplayImg4 = loadImage("assets/images/snail4.png");
+	flyBugImg = loadImage("assets/images/fly.png");
+	flyBugFlightImg = loadImage("assets/images/flyFlight0.png");
+	flyBugFlight2Img = loadImage("assets/images/flyFlight1.png");
+	flyBugSquashImg = loadImage("assets/images/flySquash.png");
 
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
@@ -81,7 +86,15 @@ function setup() {
         glassesGuyImgPressed,
         new HitBox(canvasWidth * 33/ 40, canvasHeight / 3, canvasHeight / 18),
     );
-
+	
+	flyBug = new FlyBug(
+		flyBugImg,
+		flyBugFlightImg,
+		flyBugFlight2Img,
+		flyBugSquashImg,
+		new HitBox(canvasWidth * 33/ 40, canvasHeight / 3, canvasHeight / 18),
+	);
+	
     // On screen events
     gs.events = [];
 
@@ -200,4 +213,7 @@ function onGameTimerTick(tickCount) {
     if (tickCount == 7) {
         gs.events.push(glassesGuy);
     }
+	if(tickCount == 2){ 
+		gs.events.push(flyBug);
+	}
 }
