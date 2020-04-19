@@ -168,7 +168,7 @@ function gameOver() {
 
 // Callback function called for in game timer
 function onGameTimerTick(tickCount) {
-    if (tickCount == 10) {
+    if (tickCount == 5) {
         gs.events.push(alarmClock);
     }
 }

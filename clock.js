@@ -6,7 +6,9 @@ function Clock(img, imgPressed, display1, alarmSound, hitbox) {
     this.done = false;
     this.hb = hitbox;
     this.alarmSound = alarmSound;
-    this.transition = new Transition(-50, -50, 0, 0);
+    this.transition = new Transition(-400, 0, 0, 0);
+    console.log(img)
+
 
     this.update = function () {
         if (!this.done && !this.alarmSound.isPlaying()) {

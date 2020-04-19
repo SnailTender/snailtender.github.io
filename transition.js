@@ -15,27 +15,32 @@ function Transition(x, y, destX, destY) {
         in: true,
         out: false,
     };
-    this.distance = distanceBetweenPoints(x, y, destX, destY);
 
     this.update = function() {
         if (this.transitioning.in) {
-            if (this.dest.x == this.current.x && this.dest.y == this.current.y) {
+            if (this.dest.x == this.current.x) {
                 this.transitioning.in = false;
                 return;
             }
 
-            this.current.x = this.dest.x;
-            this.current.y = this.dest.y;
+            if (this.dest.x > this.current.x) {
+                this.current.x += 2;
+            } else {
+                this.current.x -= 2;
+            }
         }
 
         if (this.transitioning.out) {
-            if (this.start.x == this.current.x && this.start.y == this.current.y) {
+            if (this.start.x == this.current.x) {
                 this.transitioning.out = false;
                 return;
             }
 
-            this.current.x = this.start.x;
-            this.current.y = this.start.y;
+            if (this.current.x < this.start.x) {
+                this.current.x += 2;
+            } else {
+                this.current.x -= 2;
+            }
         }
     }
 
