@@ -1,5 +1,6 @@
 // Game state
 let gs;
+let alarmClock;
 
 function preload() {
     // Ensure the .ttf or .otf font stored in the assets directory
@@ -44,13 +45,16 @@ function setup() {
         img: monitorImg,
     };
 
-    gs.clock = new Clock(
+    alarmClock = new Clock(
         alarmImg,
         clock12Img
     );
 
+    // On screen events
+    gs.events = [];
+
     // main game timer ticks every second and ends at 4 seconds
-    gs.timer = new Timer(3000, 1000);
+    gs.timer = new Timer(3000, 1000, onGameTimerTick);
 
     // Set text characteristics
     textFont(font);
@@ -62,19 +66,7 @@ function draw() {
     // Lose
     if (gs.timer.done) {
         // Print text
-        stroke(0, 0, 0);
-        strokeWeight(1);
-        textAlign(CENTER, CENTER);
-
-        textSize(80);
-        text("Time out!", width / 2, height / 2);
-
-        textSize(40);
-        text("\n\n\nClick to try again", width / 2, height / 2);
-
-        if (mouseIsPressed) {
-            setup();
-        }
+        gameOver();
         return;
     }
 
@@ -85,7 +77,10 @@ function draw() {
         gs.timer.resume();
     }
 
-    gs.clock.update();
+    // Update all events
+    for (i = 0; i < gs.events.length; i++) {
+        gs.events[i].update();
+    }
 
     // Drawings
     image(gs.desk.img, 0, 0, width, height);
@@ -93,8 +88,42 @@ function draw() {
 
     gs.button.draw();
     gs.timer.drawTop();
-    gs.clock.draw();
+
+    // Draw all events
+    for (i = 0; i < gs.events.length; i++) {
+        gs.events[i].draw();
+    }
 
     // Draw hand last
     gs.finger.draw();
+}
+
+// Pressed + Released
+function mouseClicked() {
+
+    // If game is over
+    if (gs.timer.done) {
+        setup();
+        return
+    }
+}
+
+// Text on gameover screen
+function gameOver() {
+    stroke(0, 0, 0);
+    strokeWeight(1);
+    textAlign(CENTER, CENTER);
+
+    textSize(80);
+    text("Time out!", width / 2, height / 2);
+
+    textSize(40);
+    text("\n\n\nClick to try again", width / 2, height / 2);
+}
+
+// Callback function called for in game timer
+function onGameTimerTick(tickCount) {
+    if (tickCount == 10) {
+        gs.events.push(alarmClock);
+    }
 }

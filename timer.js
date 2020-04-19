@@ -1,9 +1,11 @@
-function Timer(maxMS, tickMS) {
+function Timer(maxMS, tickMS, callback = () => { }) {
     this.elapsed = 0;
     this.ticking = false;
     this.maxMS = maxMS;
     this.tickMS = tickMS;
     this.done = false;
+    this.callback = callback;
+    this.tickCount = 0;
 
     // Don't do anything on interval
     this.pause = function () {
@@ -23,6 +25,9 @@ function Timer(maxMS, tickMS) {
 
     // Begin setInterval
     this.timer = setInterval(function () {
+        this.tickCount += 1;
+        typeof callback === 'function' && callback(this.tickCount);
+
         if (this.ticking) {
             this.elapsed += this.tickMS;
         }
@@ -40,7 +45,7 @@ function Timer(maxMS, tickMS) {
     }.bind(this), this.tickMS);
 
     // Cancel setInterval
-    this.endTimer = function() {
+    this.endTimer = function () {
         clearInterval(this.timer);
     };
 
