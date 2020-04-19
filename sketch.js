@@ -27,10 +27,13 @@ function setup() {
 
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
+	gameoverSound = loadSound('assets/sounds/error.mp3');
 
     canvasWidth = 1280;
     canvasHeight = 720;
     createCanvas(canvasWidth, canvasHeight);
+
+	goSoundPlayed = 0;
 
     // Initialize gamestate
     gs = {};
@@ -119,9 +122,9 @@ function draw() {
         for (i = 0; i < gs.events.length; i++) {
             gs.events[i].draw();
         }
-
+		
         if (gs.timer.done) {
-            gameOver();
+			gameOver();
         }
 
         // Draw hand last
@@ -147,7 +150,7 @@ function mouseClicked() {
 
 // Text on gameover screen
 function gameOver() {
-    stroke('white');
+	stroke('white');
     strokeWeight(5);
     textAlign(CENTER, CENTER);
 
@@ -156,6 +159,11 @@ function gameOver() {
 
     textSize(40);
     text("\n\n\nClick to try again", width / 2, height / 2);
+	
+	if(!gameoverSound.isPlaying() && !goSoundPlayed) {
+		gameoverSound.play();
+		goSoundPlayed=1;
+	}		
 }
 
 // Callback function called for in game timer
