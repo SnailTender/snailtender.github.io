@@ -10,7 +10,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
     this.timer = new Timer(0, 300);
     this.pressed = false;
     this.points = 0;
-    this.maxPoints = 300;
+    this.maxPoints = 5000;
     this.win = false;
     this.love = 0;
 
