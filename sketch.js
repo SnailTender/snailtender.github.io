@@ -60,7 +60,7 @@ function setup() {
         alarmImgPressed,
         clock12Img,
         alarmSound,
-        new HitBox(canvasWidth /8, canvasHeight / 10, canvasHeight / 7),
+        new HitBox(canvasWidth / 8, canvasHeight / 10, canvasHeight / 7),
     );
 
     // On screen events
@@ -85,7 +85,7 @@ function draw() {
             } else {
                 gs.timer.resume();
             }
-        
+
             // Update all events
             for (i = 0; i < gs.events.length; i++) {
                 // remove event when compeleted
@@ -94,7 +94,7 @@ function draw() {
                     i--;
                     continue;
                 }
-        
+
                 gs.events[i].update();
             }
         }
@@ -108,19 +108,19 @@ function draw() {
         } else {
             image(gs.monitor.img, 0, 0, width, height);
         }
-    
+
         gs.button.draw();
         gs.timer.drawTop();
-    
+
         // Draw all events
         for (i = 0; i < gs.events.length; i++) {
             gs.events[i].draw();
         }
-    
+
         if (gs.timer.done) {
             gameOver();
         }
-    
+
         // Draw hand last
         gs.finger.draw();
     }
