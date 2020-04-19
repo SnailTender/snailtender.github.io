@@ -12,6 +12,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
     this.points = 0;
     this.maxPoints = 10000;
     this.win = false;
+    this.love = 0;
 
     this.draw = function() {
         if (this.win) {
@@ -39,6 +40,11 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             stroke(0, 0, 0);
             strokeWeight(5);
             line(canvasWidth*15/40, canvasHeight*9/40, x, canvasHeight*9/40);
+
+            strokeWeight(1);
+            textFont(monitorFont);
+            textSize(10);
+            text("LOVE: " + this.love, canvasWidth*15/40 + 20, canvasHeight*9/40 + 20);
         }
 
         if (this.done && !this.win) {
@@ -58,7 +64,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
         }
 
         if (this.timer.elapsed % 300 == 0) {
-                this.points += 1;
+            this.points += 1;
         }
 
         if (this.pressed && this.timer.elapsed % 1200 == 0) {

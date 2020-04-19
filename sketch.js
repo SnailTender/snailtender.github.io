@@ -1,4 +1,6 @@
 // Game state
+let font;
+let monitorFont;
 let gs;
 let alarmClock;
 let glassesGuy;
@@ -10,6 +12,7 @@ function preload() {
     // Ensure the .ttf or .otf font stored in the assets directory
     // is loaded before setup() and draw() are called
     font = loadFont('assets/font/SegoePrint.ttf');
+    monitorFont = loadFont('assets/font/8bitOperatorPlusSC-Regular.ttf');
 }
 
 function setup() {
@@ -100,9 +103,6 @@ function setup() {
 
     // main game timer ticks every second and ends at 4 seconds
     gs.timer = new Timer(3000, 1000, onGameTimerTick);
-
-    // Set text characteristics
-    textFont(font);
 }
 
 function draw() {
@@ -116,6 +116,10 @@ function draw() {
                 gs.timer.reset();
             } else {
                 gs.timer.resume();
+            }
+
+            if (gs.button.hb.isPressed()) {
+                gs.monitor.love += 10;
             }
 
             // Update all events
@@ -188,15 +192,18 @@ function mousePressed() {
 
 // Text on gameover screen
 function gameOver() {
+    // Set text characteristics
+    textFont(font);
+    
 	stroke('white');
     strokeWeight(5);
     textAlign(CENTER, CENTER);
 
     textSize(80);
-    text("Time out!", width / 2, height / 2);
+    text("Your Virtual Snail Died!", width / 2, height / 2);
 
     textSize(40);
-    text("\n\n\nClick to try again", width / 2, height / 2);
+    text("\n\n\nYou went too long without loving him. Click to try again", width / 2, height / 2);
 	
 	if(!gameoverSound.isPlaying() && !goSoundPlayed) {
 		gameoverSound.play();
