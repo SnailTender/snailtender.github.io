@@ -16,12 +16,10 @@ function Clock(img, imgPressed, display1, alarmSound, hitbox) {
 
         if (this.hb.isPressed()) {
             this.alarmSound.stop();
-            this.done = true;
         }
     }
 
     this.draw = function () {
-
         if (this.hb.isPressed()) {
             image(this.imgPressed, 0, 0);
         } else {
@@ -30,8 +28,6 @@ function Clock(img, imgPressed, display1, alarmSound, hitbox) {
                 image(this.display1, 0, 0);
             }
         }
-
-
         // debug 
         // fill(204, 101, 192, 127);
         // stroke(127, 63, 120);

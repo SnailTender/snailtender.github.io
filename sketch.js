@@ -11,6 +11,7 @@ function preload() {
 function setup() {
     //Images
     monitorImg = loadImage('assets/images/monitor.png');
+    monitorDeadImg = loadImage('assets/images/monitorDead.png')
     deskImg = loadImage('assets/images/desk.png');
     buttonImg = loadImage('assets/images/buttonOff.png');
     buttonImgPressed = loadImage('assets/images/buttonPress.png');
@@ -19,6 +20,10 @@ function setup() {
     alarmImg = loadImage('assets/images/alarmclock.png');
     alarmImgPressed = loadImage('assets/images/alarmclockPressed.png');
     clock12Img = loadImage('assets/images/clock12.png');
+    clock420Img = loadImage('assets/images/clock420.png');
+    clockBoobImg = loadImage('assets/images/clockBoob.png');
+    glassesGuyImg = loadImage('assets/images/glassesGuy0.png');
+    glassesGuyImgPressed = loadImage('assets/images/glassesGuy1.png');
 
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
@@ -47,6 +52,7 @@ function setup() {
 
     gs.monitor = {
         img: monitorImg,
+        imgDead: monitorDeadImg,
     };
 
     alarmClock = new Clock(
@@ -70,62 +76,76 @@ function setup() {
 function draw() {
     background(220);
 
-    // Lose
-    if (gs.timer.done) {
-        // Print text
-        gameOver();
-        return;
-    }
 
-    // Logic
-    if (gs.button.hb.isPressed()) {
-        gs.timer.reset();
-    } else {
-        gs.timer.resume();
-    }
 
-    // Update all events
-    for (i = 0; i < gs.events.length; i++) {
-        // remove event when compeleted
-        if (gs.events[i].done) {
-            gs.events.splice(i, 1);
-            i--;
-            continue;
+    { // Logic
+        if (!gs.timer.done) {
+            if (gs.button.hb.isPressed()) {
+                gs.timer.reset();
+            } else {
+                gs.timer.resume();
+            }
+        
+            // Update all events
+            for (i = 0; i < gs.events.length; i++) {
+                // remove event when compeleted
+                if (gs.events[i].done) {
+                    gs.events.splice(i, 1);
+                    i--;
+                    continue;
+                }
+        
+                gs.events[i].update();
+            }
         }
-
-        gs.events[i].update();
     }
 
-    // Drawings
-    image(gs.desk.img, 0, 0, width, height);
-    image(gs.monitor.img, 0, 0, width, height);
+    { // Drawings
+        image(gs.desk.img, 0, 0, width, height);
 
-    gs.button.draw();
-    gs.timer.drawTop();
-
-    // Draw all events
-    for (i = 0; i < gs.events.length; i++) {
-        gs.events[i].draw();
+        if (gs.timer.done) {
+            image(gs.monitor.imgDead, 0, 0, width, height);
+        } else {
+            image(gs.monitor.img, 0, 0, width, height);
+        }
+    
+        gs.button.draw();
+        gs.timer.drawTop();
+    
+        // Draw all events
+        for (i = 0; i < gs.events.length; i++) {
+            gs.events[i].draw();
+        }
+    
+        if (gs.timer.done) {
+            gameOver();
+        }
+    
+        // Draw hand last
+        gs.finger.draw();
     }
-
-    // Draw hand last
-    gs.finger.draw();
 }
 
 // Pressed + Released
 function mouseClicked() {
 
     // If game is over
-    if (gs.timer.done) {
+    if (gs.timer.done && gs.button.hb.isTouchingMouse()) {
         setup();
         return
+    }
+
+    for (i = 0; i < gs.events.length; i++) {
+        if (gs.events[i].hb.isTouchingMouse()) {
+            gs.events[i].done = true;
+        }
     }
 }
 
 // Text on gameover screen
 function gameOver() {
-    stroke(0, 0, 0);
-    strokeWeight(1);
+    stroke('white');
+    strokeWeight(5);
     textAlign(CENTER, CENTER);
 
     textSize(80);
