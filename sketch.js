@@ -1,6 +1,9 @@
 // Game state
 let gs;
 let alarmClock;
+let glassesGuy;
+let canvasWidth = 1280;
+let canvasHeight = 720;
 
 function preload() {
     // Ensure the .ttf or .otf font stored in the assets directory
@@ -30,8 +33,6 @@ function setup() {
     gameoverSound = loadSound('assets/sounds/error.mp3');
     tapSound = loadSound('assets/sounds/tap.mp3');
 
-    canvasWidth = 1280;
-    canvasHeight = 720;
     createCanvas(canvasWidth, canvasHeight);
 
 	goSoundPlayed = 0;
@@ -66,6 +67,12 @@ function setup() {
         clock12Img,
         alarmSound,
         new HitBox(canvasWidth / 8, canvasHeight / 10, canvasHeight / 7),
+    );
+
+    glassesGuy = new GlassesGuy(
+        glassesGuyImg,
+        glassesGuyImgPressed,
+        new HitBox(canvasWidth * 33/ 40, canvasHeight / 3, canvasHeight / 18),
     );
 
     // On screen events
@@ -176,5 +183,9 @@ function gameOver() {
 function onGameTimerTick(tickCount) {
     if (tickCount == 5) {
         gs.events.push(alarmClock);
+    }
+
+    if (tickCount == 7) {
+        gs.events.push(glassesGuy);
     }
 }
