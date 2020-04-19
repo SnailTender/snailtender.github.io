@@ -35,10 +35,10 @@ function setup() {
     monitorDisplayImg2 = loadImage("assets/images/snail2.png");
     monitorDisplayImg3 = loadImage("assets/images/snail3.png");
     monitorDisplayImg4 = loadImage("assets/images/snail4.png");
-	flyBugImg = loadImage("assets/images/fly.png");
-	flyBugFlightImg = loadImage("assets/images/flyFlight0.png");
-	flyBugFlight2Img = loadImage("assets/images/flyFlight1.png");
-	flyBugSquashImg = loadImage("assets/images/flySquash.png");
+    flyBugImg = loadImage("assets/images/fly.png");
+    flyBugFlightImg = loadImage("assets/images/flyFlight0.png");
+    flyBugFlight2Img = loadImage("assets/images/flyFlight1.png");
+    flyBugSquashImg = loadImage("assets/images/flySquash.png");
 
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
@@ -47,7 +47,7 @@ function setup() {
 
     createCanvas(canvasWidth, canvasHeight);
 
-	goSoundPlayed = 0;
+    goSoundPlayed = 0;
 
     // Initialize gamestate
     gs = {};
@@ -87,17 +87,17 @@ function setup() {
     glassesGuy = new GlassesGuy(
         glassesGuyImg,
         glassesGuyImgPressed,
-        new HitBox(canvasWidth * 33/ 40, canvasHeight / 3, canvasHeight / 18),
+        new HitBox(canvasWidth * 33 / 40, canvasHeight / 3, canvasHeight / 18),
     );
-	
-	flyBug = new FlyBug(
-		flyBugImg,
-		flyBugFlightImg,
-		flyBugFlight2Img,
-		flyBugSquashImg,
-		new HitBox(canvasWidth * 33/ 40, canvasHeight / 3, canvasHeight / 18),
-	);
-	
+
+    flyBug = new FlyBug(
+        flyBugImg,
+        flyBugFlightImg,
+        flyBugFlight2Img,
+        flyBugSquashImg,
+        new HitBox(canvasWidth * 33 / 40, canvasHeight / 3, canvasHeight / 18),
+    );
+
     // On screen events
     gs.events = [];
 
@@ -108,8 +108,16 @@ function setup() {
 function draw() {
     background(220);
 
+
+
     { // Logic
+        if (gs.monitor.win) {
+            gs.timer.endTimer();
+        }
+
         if (!gs.timer.done) {
+
+
             gs.monitor.update();
 
             if (gs.button.hb.isPressed()) {
@@ -156,9 +164,9 @@ function draw() {
         for (i = 0; i < gs.events.length; i++) {
             gs.events[i].draw();
         }
-		
+
         if (gs.timer.done) {
-			gameOver();
+            gameOver();
         }
 
         // Draw hand last
@@ -186,7 +194,7 @@ function mousePressed() {
     if (gs.button.hb.isTouchingMouse()) {
         gs.monitor.pressed = true;
     }
-    
+
     gs.finger.sound.play();
 }
 
@@ -194,8 +202,8 @@ function mousePressed() {
 function gameOver() {
     // Set text characteristics
     textFont(font);
-    
-	stroke('white');
+
+    stroke('white');
     strokeWeight(5);
     textAlign(CENTER, CENTER);
 
@@ -204,11 +212,11 @@ function gameOver() {
 
     textSize(40);
     text("\n\n\nYou went too long without loving him. Click to try again", width / 2, height / 2);
-	
-	if(!gameoverSound.isPlaying() && !goSoundPlayed) {
-		gameoverSound.play();
-		goSoundPlayed=1;
-	}		
+
+    if (!gameoverSound.isPlaying() && !goSoundPlayed) {
+        gameoverSound.play();
+        goSoundPlayed = 1;
+    }
 }
 
 // Callback function called for in game timer
@@ -220,7 +228,7 @@ function onGameTimerTick(tickCount) {
     if (tickCount == 7) {
         gs.events.push(glassesGuy);
     }
-	if(tickCount == 2){ 
-		gs.events.push(flyBug);
-	}
+    if (tickCount == 2) {
+        gs.events.push(flyBug);
+    }
 }

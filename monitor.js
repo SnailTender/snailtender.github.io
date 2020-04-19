@@ -10,7 +10,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
     this.timer = new Timer(0, 300);
     this.pressed = false;
     this.points = 0;
-    this.maxPoints = 10000;
+    this.maxPoints = 300;
     this.win = false;
     this.love = 0;
 
@@ -44,7 +44,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             strokeWeight(1);
             textFont(monitorFont);
             textSize(10);
-            text("LOVE: " + this.love, canvasWidth*15/40 + 20, canvasHeight*9/40 + 20);
+            text("LOVE: " + this.love, canvasWidth*15/40 + 40, canvasHeight*9/40 + 20);
         }
 
         if (this.done && !this.win) {
