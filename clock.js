@@ -37,6 +37,7 @@ function Clock(img, imgPressed, display1, alarmSound, hitbox) {
                 image(this.display1, this.transition.current.x, this.transition.current.y);
             }
         }
+        
         // debug 
         // fill(204, 101, 192, 127);
         // stroke(127, 63, 120);

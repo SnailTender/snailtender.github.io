@@ -30,6 +30,7 @@ function setup() {
     monitorDisplayImg = loadImage("assets/images/snail1.png");
     monitorDisplayImg2 = loadImage("assets/images/snail2.png");
     monitorDisplayImg3 = loadImage("assets/images/snail3.png");
+    monitorDisplayImg4 = loadImage("assets/images/snail4.png");
 
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
@@ -63,6 +64,7 @@ function setup() {
         monitorImg,
         monitorDeadImg,
         monitorDisplayImg3,
+        monitorDisplayImg4,
         [monitorDisplayImg, monitorDisplayImg2],
     );
 
