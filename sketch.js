@@ -76,8 +76,6 @@ function setup() {
 function draw() {
     background(220);
 
-
-
     { // Logic
         if (!gs.timer.done) {
             if (gs.button.hb.isPressed()) {
@@ -89,13 +87,18 @@ function draw() {
             // Update all events
             for (i = 0; i < gs.events.length; i++) {
                 // remove event when compeleted
-                if (gs.events[i].done) {
+                if (gs.events[i].done && !gs.events[i].transition.isTransitioning()) {
                     gs.events.splice(i, 1);
                     i--;
                     continue;
                 }
 
                 gs.events[i].update();
+            }
+        } else { // end game logic
+            // End all events when the game ends
+            for (i = 0; i < gs.events.length; i++) {
+                gs.events[i].end();
             }
         }
     }
@@ -137,7 +140,7 @@ function mouseClicked() {
 
     for (i = 0; i < gs.events.length; i++) {
         if (gs.events[i].hb.isTouchingMouse()) {
-            gs.events[i].done = true;
+            gs.events[i].end();
         }
     }
 }

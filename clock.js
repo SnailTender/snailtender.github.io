@@ -6,26 +6,33 @@ function Clock(img, imgPressed, display1, alarmSound, hitbox) {
     this.done = false;
     this.hb = hitbox;
     this.alarmSound = alarmSound;
+    this.transition = new Transition(-50, -50, 0, 0);
 
     this.update = function () {
-        this.timer.resume();
-
         if (!this.done && !this.alarmSound.isPlaying()) {
             this.alarmSound.play();
         }
 
-        if (this.hb.isPressed()) {
-            this.alarmSound.stop();
+        this.timer.resume();
+
+        if (this.transition.isTransitioning()) {
+            this.transition.update();
         }
+    }
+
+    this.end = function () {
+        this.transition.transitionOut();
+        this.done = true;
+        this.alarmSound.stop();
     }
 
     this.draw = function () {
         if (this.hb.isPressed()) {
-            image(this.imgPressed, 0, 0);
+            image(this.imgPressed, this.transition.current.x, this.transition.current.y);
         } else {
-            image(this.img, 0, 0);
+            image(this.img, this.transition.current.x, this.transition.current.y);
             if (this.timer.elapsed % 1000 == 0) {
-                image(this.display1, 0, 0);
+                image(this.display1, this.transition.current.x, this.transition.current.y);
             }
         }
         // debug 
