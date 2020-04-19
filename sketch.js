@@ -47,7 +47,8 @@ function setup() {
 
     alarmClock = new Clock(
         alarmImg,
-        clock12Img
+        clock12Img,
+        new HitBox(canvasWidth /8, canvasHeight / 10, canvasHeight / 7),
     );
 
     // On screen events
@@ -79,6 +80,13 @@ function draw() {
 
     // Update all events
     for (i = 0; i < gs.events.length; i++) {
+        // remove event when compeleted
+        if (gs.events[i].done) {
+            gs.events.splice(i, 1);
+            i--;
+            continue;
+        }
+
         gs.events[i].update();
     }
 
