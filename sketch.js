@@ -31,10 +31,10 @@ function setup() {
         new HitBox(canvasWidth / 50 * 26, canvasHeight / 10 * 7, canvasHeight / 15),
     );
 
-    gs.finger = {
-        img: fingerImg,
-        imgPressed: fingerImgPressed,
-    };
+    gs.finger = new Finger(
+        fingerImg,
+        fingerImgPressed,
+    );
 
     gs.desk = {
         img: deskImg,
@@ -44,14 +44,13 @@ function setup() {
         img: monitorImg,
     };
 
-    gs.clock = {
-        img: alarmImg,
-        img12: clock12Img,
-        timer: new Timer(0, 500),
-    }
+    gs.clock = new Clock(
+        alarmImg,
+        clock12Img
+    );
 
     // main game timer ticks every second and ends at 4 seconds
-    gs.timer = new Timer(4000, 1000);
+    gs.timer = new Timer(3000, 1000);
 
     // Set text characteristics
     textFont(font);
@@ -86,30 +85,16 @@ function draw() {
         gs.timer.resume();
     }
 
-    gs.clock.timer.resume();
+    gs.clock.update();
 
     // Drawings
     image(gs.desk.img, 0, 0, width, height);
     image(gs.monitor.img, 0, 0, width, height);
 
     gs.button.draw();
-
     gs.timer.drawTop();
-
-    image(gs.clock.img, 0, 0);
-    console.log(gs.clock.timer)
-    if (gs.clock.timer.elapsed % 1000 == 0) {
-        image(gs.clock.img12, 0, 0);
-    }
+    gs.clock.draw();
 
     // Draw hand last
-    drawHand();
-}
-
-function drawHand() {
-    if (mouseIsPressed) {
-        image(gs.finger.imgPressed, mouseX - gs.finger.imgPressed.width / 10, mouseY - gs.finger.imgPressed.height / 10);
-    } else {
-        image(gs.finger.img, mouseX - gs.finger.img.width / 10, mouseY - gs.finger.img.height / 10);
-    }
+    gs.finger.draw();
 }
