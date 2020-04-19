@@ -7,8 +7,6 @@ function Clock(img, imgPressed, display1, alarmSound, hitbox) {
     this.hb = hitbox;
     this.alarmSound = alarmSound;
     this.transition = new Transition(-400, 0, 0, 0);
-    console.log(img)
-
 
     this.update = function () {
         if (!this.done && !this.alarmSound.isPlaying()) {
@@ -29,7 +27,7 @@ function Clock(img, imgPressed, display1, alarmSound, hitbox) {
     }
 
     this.draw = function () {
-        if (this.hb.isPressed()) {
+        if (this.hb.isPressed() && !this.transition.isTransitioning()) {
             image(this.imgPressed, this.transition.current.x, this.transition.current.y);
         } else {
             image(this.img, this.transition.current.x, this.transition.current.y);

@@ -1,4 +1,4 @@
-function Transition(x, y, destX, destY) {
+function Transition(x, y, destX) {
     this.start = {
         x: x,
         y: y,
@@ -9,12 +9,14 @@ function Transition(x, y, destX, destY) {
     };
     this.dest = {
         x: destX,
-        y: destY,
+        y: y,
     };
     this.transitioning = {
         in: true,
         out: false,
     };
+
+    this.speed = 5;
 
     this.update = function() {
         if (this.transitioning.in) {
@@ -24,9 +26,17 @@ function Transition(x, y, destX, destY) {
             }
 
             if (this.dest.x > this.current.x) {
-                this.current.x += 2;
+                this.current.x += this.speed;
+
+                if (this.current.x > this.dest.x) {
+                    this.current.x = this.dest.x
+                }
             } else {
-                this.current.x -= 2;
+                this.current.x -= this.speed;
+
+                if (this.current.x < this.dest.x) {
+                    this.current.x = this.dest.x
+                }
             }
         }
 
@@ -37,9 +47,17 @@ function Transition(x, y, destX, destY) {
             }
 
             if (this.current.x < this.start.x) {
-                this.current.x += 2;
+                this.current.x += this.speed;
+
+                if (this.current.x > this.start.x) {
+                    this.current.x = this.start.x
+                }
             } else {
-                this.current.x -= 2;
+                this.current.x -= this.speed;
+
+                if (this.current.x < this.start.x) {
+                    this.current.x = this.start.x
+                }
             }
         }
     }

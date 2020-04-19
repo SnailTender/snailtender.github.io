@@ -1,6 +1,7 @@
-function Finger(img, imgPressed) {
+function Finger(img, imgPressed, tapSound) {
     this.img = img;
     this.imgPressed = imgPressed;
+    this.sound = tapSound;
 
     this.draw = function () {
         if (mouseIsPressed) {

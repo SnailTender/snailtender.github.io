@@ -27,7 +27,8 @@ function setup() {
 
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
-	gameoverSound = loadSound('assets/sounds/error.mp3');
+    gameoverSound = loadSound('assets/sounds/error.mp3');
+    tapSound = loadSound('assets/sounds/tap.mp3');
 
     canvasWidth = 1280;
     canvasHeight = 720;
@@ -47,6 +48,7 @@ function setup() {
     gs.finger = new Finger(
         fingerImg,
         fingerImgPressed,
+        tapSound
     );
 
     gs.desk = {
@@ -142,10 +144,14 @@ function mouseClicked() {
     }
 
     for (i = 0; i < gs.events.length; i++) {
-        if (gs.events[i].hb.isTouchingMouse()) {
+        if (gs.events[i].hb.isTouchingMouse() && !gs.events[i].transition.isTransitioning()) {
             gs.events[i].end();
         }
     }
+}
+
+function mousePressed() {
+    gs.finger.sound.play();
 }
 
 // Text on gameover screen
