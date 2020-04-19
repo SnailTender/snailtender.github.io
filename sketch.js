@@ -2,8 +2,8 @@
 let gs;
 let alarmClock;
 let glassesGuy;
-let canvasWidth = 1280;
-let canvasHeight = 720;
+const canvasWidth = 1280;
+const canvasHeight = 720;
 
 function preload() {
     // Ensure the .ttf or .otf font stored in the assets directory
@@ -27,6 +27,9 @@ function setup() {
     clockBoobImg = loadImage('assets/images/clockBoob.png');
     glassesGuyImg = loadImage('assets/images/glassesGuy0.png');
     glassesGuyImgPressed = loadImage('assets/images/glassesGuy1.png');
+    monitorDisplayImg = loadImage("assets/images/snail1.png");
+    monitorDisplayImg2 = loadImage("assets/images/snail2.png");
+    monitorDisplayImg3 = loadImage("assets/images/snail3.png");
 
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
@@ -56,10 +59,12 @@ function setup() {
         img: deskImg,
     };
 
-    gs.monitor = {
-        img: monitorImg,
-        imgDead: monitorDeadImg,
-    };
+    gs.monitor = new MonitorDisplay(
+        monitorImg,
+        monitorDeadImg,
+        monitorDisplayImg3,
+        [monitorDisplayImg, monitorDisplayImg2],
+    );
 
     alarmClock = new Clock(
         alarmImg,
@@ -90,6 +95,8 @@ function draw() {
 
     { // Logic
         if (!gs.timer.done) {
+            gs.monitor.update();
+
             if (gs.button.hb.isPressed()) {
                 gs.timer.reset();
             } else {
@@ -108,6 +115,9 @@ function draw() {
                 gs.events[i].update();
             }
         } else { // end game logic
+
+            gs.monitor.end();
+
             // End all events when the game ends
             for (i = 0; i < gs.events.length; i++) {
                 gs.events[i].end();
@@ -118,11 +128,7 @@ function draw() {
     { // Drawings
         image(gs.desk.img, 0, 0, width, height);
 
-        if (gs.timer.done) {
-            image(gs.monitor.imgDead, 0, 0, width, height);
-        } else {
-            image(gs.monitor.img, 0, 0, width, height);
-        }
+        gs.monitor.draw();
 
         gs.button.draw();
         gs.timer.drawTop();
@@ -158,6 +164,10 @@ function mouseClicked() {
 }
 
 function mousePressed() {
+    if (gs.button.hb.isTouchingMouse()) {
+        gs.monitor.pressed = true;
+    }
+    
     gs.finger.sound.play();
 }
 

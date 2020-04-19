@@ -11,7 +11,7 @@ function Button(img, imgPressed, hitbox) {
         }
     }
 
-    this.resize = function (canvasWdith, canvasHeight) {
+    this.resize = function () {
         this.hb = new HitBox(canvasWidth / 50 * 26, canvasHeight / 10 * 7, canvasHeight / 15);
     }
 }

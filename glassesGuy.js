@@ -11,7 +11,7 @@ function GlassesGuy(img, imgPressed, hitbox) {
     this.update = function () {
         if (this.transition.isTransitioning()) {
             this.transition.update();
-            this.hobble = 10/2 + 10 * Math.sin(this.transition.current.x/20);
+            this.hobble = 10 / 2 + 10 * Math.sin(this.transition.current.x / 20);
         } else {
             this.hobble = 0;
         }
