@@ -17,7 +17,11 @@ function setup() {
     fingerImg = loadImage('assets/images/fingerPoint.png');
     fingerImgPressed = loadImage('assets/images/fingerPress.png');
     alarmImg = loadImage('assets/images/alarmclock.png');
+    alarmImgPressed = loadImage('assets/images/alarmclockPressed.png');
     clock12Img = loadImage('assets/images/clock12.png');
+
+    // sound
+    alarmSound = loadSound('assets/sounds/alarm.mp3');
 
     canvasWidth = 1280;
     canvasHeight = 720;
@@ -47,7 +51,9 @@ function setup() {
 
     alarmClock = new Clock(
         alarmImg,
+        alarmImgPressed,
         clock12Img,
+        alarmSound,
         new HitBox(canvasWidth /8, canvasHeight / 10, canvasHeight / 7),
     );
 
