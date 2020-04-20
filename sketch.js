@@ -6,6 +6,7 @@ let alarmClock;
 let glassesGuy;
 let flyBug;
 let doughBoy;
+let bastet;
 const canvasWidth = 1280;
 const canvasHeight = 720;
 
@@ -45,7 +46,11 @@ function setup() {
 	doughBoyImgWalk2 = loadImage("assets/images/doughBoyWalk2.png");
 	doughBoyImgHead = loadImage("assets/images/doughBoyHead.png");
 	doughBoyImgBelly = loadImage("assets/images/doughBoyBelly.png");
-
+	bastetImg = loadImage("assets/images/bastet.png");
+	bastetImgMad = loadImage("assets/images/bastetMad.png");
+	cosmoImg = loadImage("assets/images/cosmo.png");
+	cosmoImgMad = loadImage("assets/images/cosmoMad.png");
+	
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
     gameoverSound = loadSound('assets/sounds/error.mp3');
@@ -113,6 +118,12 @@ function setup() {
         new HitBox(760, 250, 40),
 		new HitBox(850, 450, 100),
     );
+	
+	bastet = new Bastet(
+		bastetImg,
+		bastetImgMad,
+		new HitBox(random(canvasWidth+150), canvasHeight-150, 150),
+	);
 
     // On screen events
     gs.events = [];
@@ -252,5 +263,9 @@ function onGameTimerTick(tickCount) {
 	
 	if(tickCount == 10) {
 		gs.events.push(doughBoy);
+	}
+	
+	if (tickCount == 1) {
+		gs.events.push(bastet);
 	}
 }
