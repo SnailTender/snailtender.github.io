@@ -1,9 +1,10 @@
-function FlyBug(img, imgFlight, imgFlight2, imgSquash, buzzSound) {
+function FlyBug(img, imgFlight, imgFlight2, imgSquash, buzzSound, splatSound) {
     this.img = img;
     this.imgFlight = imgFlight;
     this.imgFlight2 = imgFlight2;
     this.imgSquash = imgSquash;
-    this.sound = buzzSound;
+    this.buzzSound = buzzSound;
+	this.splatSound = splatSound;
     this.hb = new HitBox(canvasWidth * 33 / 40, canvasHeight / 3, canvasHeight / 18);
     this.done = false;
     this.hasBeenPressed = false;
@@ -16,15 +17,15 @@ function FlyBug(img, imgFlight, imgFlight2, imgSquash, buzzSound) {
 
     this.update = function () {
         if (this.transition.isTransitioning()) {
-            if (!this.sound.isPlaying()) {
-                this.sound.setVolume(0.1);
-                this.sound.play();
+            if (!this.buzzSound.isPlaying()) {
+                this.buzzSound.setVolume(0.1);
+                this.buzzSound.play();
             }
         
             this.transition.update();
             this.hobble = 10 / 2 + 10 * Math.sin(this.transition.current.x / 10);
         } else {
-            this.sound.stop();
+            this.buzzSound.stop();
             this.hobble = 0;
 
             if (this.wait >= 100) {
@@ -52,6 +53,10 @@ function FlyBug(img, imgFlight, imgFlight2, imgSquash, buzzSound) {
 
         if (this.hasBeenPressed) {
             image(this.imgSquash, this.transition.current.x, this.transition.current.y + this.hobble);
+			if (!this.splatSound.isPlaying()) {
+				this.splatSound.setVolume(0.1);
+                this.splatSound.play();
+            }
             this.transition.transitioning.in = false
         } else {
             //if the fly is not flying and still

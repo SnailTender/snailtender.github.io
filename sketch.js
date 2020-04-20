@@ -105,6 +105,7 @@ function preload() {
     tapSound = loadSound('assets/sounds/tap.mp3');
     backgroundSound = loadSound('assets/sounds/background.mp3');
     buzzSound = loadSound('assets/sounds/buzz.mp3');
+	splatSound = loadSound('assets/sounds/bugSplat.mp3');
     doughBoyTouchBellySound = loadSound('assets/sounds/doughboytouch.mp3');
     doughBoyTouchFaceSound = loadSound('assets/sounds/doughboyfacetouch.mp3');
     doughBoyWalkingSound = loadSound('assets/sounds/doughboywalking.mp3');
@@ -309,7 +310,8 @@ function onGameTimerTick(tickCount) {
             flyBugFlightImg,
             flyBugFlight2Img,
             flyBugSquashImg,
-            buzzSound
+            buzzSound,
+			splatSound,
         ));
     }
 
