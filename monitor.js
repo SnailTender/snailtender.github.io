@@ -10,14 +10,14 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
     this.timer = new Timer(0, 300);
     this.pressed = false;
     this.points = 0;
-    this.maxPoints = 5000;
+    this.maxPoints = 3000;
     this.win = false;
     this.love = 0;
     this.started = false;
 
     this.draw = function () {
         if (!this.started) { // draw start screen
-            stroke(0, 0, 0);
+            stroke('black');
             strokeWeight(1);
             textFont(monitorFont);
             textSize(20);

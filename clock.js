@@ -1,10 +1,10 @@
-function Clock(img, imgPressed, display1, alarmSound, hitbox) {
+function Clock(img, imgPressed, display1, alarmSound) {
     this.img = img;
     this.imgPressed = imgPressed;
     this.display1 = display1;
     this.timer = new Timer(0, 500);
     this.done = false;
-    this.hb = hitbox;
+    this.hb = new HitBox(canvasWidth / 8, canvasHeight / 10, canvasHeight / 7);
     this.alarmSound = alarmSound;
 
     this.transition = new Transition(-400, 0, 0);

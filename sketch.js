@@ -2,11 +2,6 @@
 let font;
 let monitorFont;
 let gs;
-let alarmClock;
-let glassesGuy;
-let flyBug;
-let doughBoy;
-let bastet;
 const canvasWidth = 1280;
 const canvasHeight = 720;
 
@@ -41,16 +36,16 @@ function setup() {
     flyBugFlightImg = loadImage("assets/images/flyFlight0.png");
     flyBugFlight2Img = loadImage("assets/images/flyFlight1.png");
     flyBugSquashImg = loadImage("assets/images/flySquash.png");
-	doughBoyImg = loadImage("assets/images/doughBoy.png");
-	doughBoyImgWalk = loadImage("assets/images/doughBoyWalk1.png");
-	doughBoyImgWalk2 = loadImage("assets/images/doughBoyWalk2.png");
-	doughBoyImgHead = loadImage("assets/images/doughBoyHead.png");
-	doughBoyImgBelly = loadImage("assets/images/doughBoyBelly.png");
-	bastetImg = loadImage("assets/images/bastet.png");
-	bastetImgMad = loadImage("assets/images/bastetMad.png");
-	cosmoImg = loadImage("assets/images/cosmo.png");
-	cosmoImgMad = loadImage("assets/images/cosmoMad.png");
-	
+    doughBoyImg = loadImage("assets/images/doughBoy.png");
+    doughBoyImgWalk = loadImage("assets/images/doughBoyWalk1.png");
+    doughBoyImgWalk2 = loadImage("assets/images/doughBoyWalk2.png");
+    doughBoyImgHead = loadImage("assets/images/doughBoyHead.png");
+    doughBoyImgBelly = loadImage("assets/images/doughBoyBelly.png");
+    bastetImg = loadImage("assets/images/bastet.png");
+    bastetImgMad = loadImage("assets/images/bastetMad.png");
+    cosmoImg = loadImage("assets/images/cosmo.png");
+    cosmoImgMad = loadImage("assets/images/cosmoMad.png");
+
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
     gameoverSound = loadSound('assets/sounds/error.mp3');
@@ -66,7 +61,6 @@ function setup() {
     gs.button = new Button(
         buttonImg,
         buttonImgPressed,
-        new HitBox(canvasWidth / 50 * 26, canvasHeight / 10 * 7, canvasHeight / 15),
     );
 
     gs.finger = new Finger(
@@ -87,44 +81,6 @@ function setup() {
         [monitorDisplayImg, monitorDisplayImg2],
     );
 
-    alarmClock = new Clock(
-        alarmImg,
-        alarmImgPressed,
-        clock12Img,
-        alarmSound,
-        new HitBox(canvasWidth / 8, canvasHeight / 10, canvasHeight / 7),
-    );
-
-    glassesGuy = new GlassesGuy(
-        glassesGuyImg,
-        glassesGuyImgPressed,
-        new HitBox(canvasWidth * 33 / 40, canvasHeight / 3, canvasHeight / 18),
-    );
-
-    flyBug = new FlyBug(
-        flyBugImg,
-        flyBugFlightImg,
-        flyBugFlight2Img,
-        flyBugSquashImg,
-        new HitBox(canvasWidth * 33 / 40, canvasHeight / 3, canvasHeight / 18),
-    );
-	
-	doughBoy = new DoughBoy(
-		doughBoyImg,
-		doughBoyImgWalk,
-		doughBoyImgWalk2,
-		doughBoyImgHead,
-		doughBoyImgBelly,
-        new HitBox(760, 250, 40),
-		new HitBox(850, 450, 100),
-    );
-	
-	bastet = new Bastet(
-		bastetImg,
-		bastetImgMad,
-		new HitBox(random(canvasWidth), canvasHeight-150, 150),
-	);
-
     // On screen events
     gs.events = [];
 }
@@ -134,10 +90,6 @@ function draw() {
 
     { // Logic
         if (gs.monitor.started) {
-            if (gs.monitor.win) {
-                gs.timer.endTimer();
-            }
-
             if (!gs.timer.done) {
 
                 gs.monitor.update();
@@ -151,18 +103,6 @@ function draw() {
                 if (gs.button.hb.isPressed()) {
                     gs.monitor.love += 10;
                 }
-
-                // Update all events
-                for (i = 0; i < gs.events.length; i++) {
-                    // remove event when compeleted
-                    if (gs.events[i].done && !gs.events[i].transition.isTransitioning()) {
-                        gs.events.splice(i, 1);
-                        i--;
-                        continue;
-                    }
-
-                    gs.events[i].update();
-                }
             } else { // end game logic
 
                 gs.monitor.end();
@@ -171,6 +111,18 @@ function draw() {
                 for (i = 0; i < gs.events.length; i++) {
                     gs.events[i].end();
                 }
+            }
+
+            // Update all events
+            for (i = 0; i < gs.events.length; i++) {
+                // remove event when compeleted
+                if (gs.events[i].done && !gs.events[i].transition.isTransitioning()) {
+                    gs.events.splice(i, 1);
+                    i--;
+                    continue;
+                }
+
+                gs.events[i].update();
             }
         }
     }
@@ -216,7 +168,7 @@ function mouseClicked() {
     }
 
     for (i = 0; i < gs.events.length; i++) {
-        if (gs.events[i].hb.isTouchingMouse() && !gs.events[i].transition.isTransitioning()) {
+        if (gs.events[i].hb.isTouchingMouse()) {
             gs.events[i].end();
         }
     }
@@ -235,7 +187,7 @@ function gameOver() {
     // Set text characteristics
     textFont(monitorFont);
 
-    stroke('white');
+    stroke('black');
     strokeWeight(2);
 
     textSize(16);
@@ -250,22 +202,78 @@ function gameOver() {
 // Callback function called for in game timer
 function onGameTimerTick(tickCount) {
     if (tickCount == 5) {
-        gs.events.push(alarmClock);
-    }
-
-    if (tickCount == 10) {
-        gs.events.push(glassesGuy);
+        gs.events.push(new Clock(
+            alarmImg,
+            alarmImgPressed,
+            clock12Img,
+            alarmSound,
+        ));
     }
 
     if (tickCount == 2) {
-        gs.events.push(flyBug);
+        gs.events.push(new GlassesGuy(
+            glassesGuyImg,
+            glassesGuyImgPressed,
+        ));
     }
-	
-	if(tickCount == 17) {
-		gs.events.push(doughBoy);
-	}
-	
-	if (tickCount == 20) {
-		gs.events.push(bastet);
-	}
+
+    if (tickCount == 2) {
+        gs.events.push(new FlyBug(
+            flyBugImg,
+            flyBugFlightImg,
+            flyBugFlight2Img,
+            flyBugSquashImg
+        ));
+    }
+
+    if (tickCount == 17) {
+        gs.events.push(new DoughBoy(
+            doughBoyImg,
+            doughBoyImgWalk,
+            doughBoyImgWalk2,
+            doughBoyImgHead,
+            doughBoyImgBelly,
+            new HitBox(760, 250, 40),
+            new HitBox(850, 450, 100),
+        ));
+    }
+
+    if (tickCount == 20) {
+        gs.events.push(new Bastet(
+            bastetImg,
+            bastetImgMad,
+        ));
+    }
+
+    if (tickCount == 35) {
+        gs.events.push(new Clock(
+            alarmImg,
+            alarmImgPressed,
+            clock12Img,
+            alarmSound,
+        ));
+        gs.events.push(new GlassesGuy(
+            glassesGuyImg,
+            glassesGuyImgPressed,
+        ));
+        gs.events.push(new FlyBug(
+        flyBugImg,
+        flyBugFlightImg,
+        flyBugFlight2Img,
+        flyBugSquashImg
+        ));
+        gs.events.push(new DoughBoy(
+            doughBoyImg,
+            doughBoyImgWalk,
+            doughBoyImgWalk2,
+            doughBoyImgHead,
+            doughBoyImgBelly,
+            new HitBox(760, 250, 40),
+            new HitBox(850, 450, 100),
+        ));
+        gs.events.push(new Bastet(
+            bastetImg,
+            bastetImgMad,
+        ));
+    }
 }

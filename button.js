@@ -1,7 +1,7 @@
-function Button(img, imgPressed, hitbox) {
+function Button(img, imgPressed) {
     this.img = img;
     this.imgPressed = imgPressed;
-    this.hb = hitbox;
+    this.hb = new HitBox(canvasWidth / 50 * 26, canvasHeight / 10 * 7, canvasHeight / 15);
 
     this.draw = function () {
         if (this.hb.isPressed()) {

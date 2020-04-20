@@ -34,7 +34,8 @@ function Transition(x, y, destX) {
     }
 
     this.transitionOut = function () {
-        return this.transitioning.out = true;
+        this.transitioning.in = false;
+        this.transitioning.out = true;
     }
 
     this.moveInTransition = function () {
