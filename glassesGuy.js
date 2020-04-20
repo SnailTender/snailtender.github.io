@@ -29,7 +29,7 @@ function GlassesGuy(img, imgPressed, walkingSound, touchSound) {
         } else {
             this.hobble = 0;
             if (this.wait >= 100 && !this.hasBeenPressed) {
-                newPosition = Math.floor(Math.random() * Math.floor(canvasWidth - 400));
+                let newPosition = Math.floor(Math.random() * Math.floor(canvasWidth - 400));
                 this.transition = new Transition(this.transition.current.x, this.transition.current.y, newPosition);
                 this.wait = 0;
             } else {

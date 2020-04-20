@@ -306,15 +306,13 @@ function onGameTimerTick(tickCount) {
         ));
     }
 
-    if (tickCount == 170) {
+    if (tickCount == 20 ) { //170
         gs.events.push(new DoughBoy(
             doughBoyImg,
             doughBoyImgWalk,
             doughBoyImgWalk2,
             doughBoyImgHead,
             doughBoyImgBelly,
-            new HitBox(760, 250, 40),
-            new HitBox(850, 450, 100),
             doughBoyTouchBellySound,
             doughBoyTouchFaceSound,
             doughBoyWalkingSound,
@@ -336,31 +334,33 @@ function onGameTimerTick(tickCount) {
             clock12Img,
             alarmSound,
         ));
+        
         gs.events.push(new GlassesGuy(
             glassesGuyImg,
             glassesGuyImgPressed,
             glassesGuyWalkingSound,
             glassesGuyTouchSound,
         ));
+
         gs.events.push(new FlyBug(
-        flyBugImg,
-        flyBugFlightImg,
-        flyBugFlight2Img,
-        flyBugSquashImg,
-        buzzSound
+            flyBugImg,
+            flyBugFlightImg,
+            flyBugFlight2Img,
+            flyBugSquashImg,
+            buzzSound
         ));
+
         gs.events.push(new DoughBoy(
             doughBoyImg,
             doughBoyImgWalk,
             doughBoyImgWalk2,
             doughBoyImgHead,
             doughBoyImgBelly,
-            new HitBox(760, 250, 40),
-            new HitBox(850, 450, 100),
             doughBoyTouchBellySound,
             doughBoyTouchFaceSound,
             doughBoyWalkingSound,
         ));
+
         gs.events.push(new Bastet(
             bastetImg,
             bastetImgMad,
