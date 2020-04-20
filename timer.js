@@ -52,7 +52,7 @@ function Timer(maxMS, tickMS, callback = () => { }) {
 
     // draw timer at top of screen
     this.drawTop = function () {
-        stroke(0, 0, 0);
+        stroke('black');
         strokeWeight(10);
         x = map(this.elapsed, 0, this.maxMS, 0, width);
         line(0, 0, x, 0);

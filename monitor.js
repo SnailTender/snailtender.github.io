@@ -10,7 +10,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
     this.timer = new Timer(0, 300);
     this.pressed = false;
     this.points = 0;
-    this.maxPoints = 3000;
+    this.maxPoints = 2800;
     this.win = false;
     this.love = 0;
     this.started = false;
@@ -21,11 +21,16 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             strokeWeight(1);
             textFont(monitorFont);
             textSize(20);
-            textAlign(0, 0);
+            textAlign(LEFT);
             text("Virtual Snail Buddy\n\n     Press Start!", canvasWidth * 18 / 40, canvasHeight * 14 / 40);
         } else if (this.win) { // draw win screen
             image(this.imgWin, canvasWidth * 15 / 40, canvasHeight * 7 / 40, canvasWidth * 12 / 40, canvasHeight * 13 / 40);
-            image(this.imgWin, canvasWidth * 15 / 40, canvasHeight * 7 / 40, canvasWidth * 12 / 40, canvasHeight * 13 / 40);
+            stroke('black');
+            strokeWeight(1);
+            textFont(monitorFont);
+            textSize(20);
+            textAlign(LEFT);
+            text("Love achieved!\n    Congrats!", canvasWidth * 15 / 40 + 40, canvasHeight * 9 / 40 + 20);
         } else if (!this.done) { // draw main gain screen
             if (this.pressed) { // draw pressed
                 image(this.imgPressed, canvasWidth * 15 / 40, canvasHeight * 7 / 40, canvasWidth * 12 / 40, canvasHeight * 13 / 40);
@@ -41,14 +46,15 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             } else {
                 x = (canvasWidth * 15 / 40) + (canvasWidth * 12 / 40)
             }
-            stroke(0, 0, 0);
+            stroke('black');
             strokeWeight(5);
             line(canvasWidth * 15 / 40, canvasHeight * 9 / 40, x, canvasHeight * 9 / 40);
 
+            stroke('black');
             strokeWeight(1);
             textFont(monitorFont);
             textSize(10);
-            textAlign(0, 0);
+            textAlign(LEFT);
             text("LOVE: " + this.love, canvasWidth * 15 / 40 + 40, canvasHeight * 9 / 40 + 20);
         }
 
