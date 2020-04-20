@@ -22,7 +22,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             textFont(monitorFont);
             textSize(20);
             textAlign(LEFT);
-            text("Virtual Snail Buddy\n\n     Press Start!", canvasWidth * 18 / 40, canvasHeight * 14 / 40);
+            text("  Virtual Snail Buddy\n\nPress Button to Start!", canvasWidth * 18 / 40, canvasHeight * 14 / 40);
         } else if (this.win) { // draw win screen
             image(this.imgWin, canvasWidth * 15 / 40, canvasHeight * 7 / 40, canvasWidth * 12 / 40, canvasHeight * 13 / 40);
             stroke('black');
