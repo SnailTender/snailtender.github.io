@@ -6,7 +6,7 @@ html, body {
   height: 100%;
 }
 
-sketch-holder {
+body {
   height: 100%;
   margin: 0;
   display: flex;
@@ -17,3 +17,8 @@ sketch-holder {
   /* This centers our sketch vertically. */
   align-items: center;
 }
+
+.sub_div { 
+  position: absolute; 
+  bottom: 0px; 
+} 

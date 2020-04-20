@@ -45,8 +45,7 @@ function setup() {
     gameoverSound = loadSound('assets/sounds/error.mp3');
     tapSound = loadSound('assets/sounds/tap.mp3');
 
-    let canvas = createCanvas(canvasWidth, canvasHeight);
-    canvas.parent('sketch-holder');
+    createCanvas(canvasWidth, canvasHeight);
 
     goSoundPlayed = 0;
 
