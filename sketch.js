@@ -1,18 +1,54 @@
 // Game state
-let font;
-let monitorFont;
 let gs;
 const canvasWidth = 1280;
 const canvasHeight = 720;
 
+//fonts
+let monitorFont;
+
+//images
+let monitorImg;
+let monitorDeadImg;
+let deskImg;
+let buttonImg;
+let buttonImgPressed;
+let fingerImg;
+let fingerImgPressed;
+let alarmImg;
+let alarmImgPressed;
+let clock12Img;
+let clock420Img;
+let clockBoobImg;
+let glassesGuyImg;
+let glassesGuyImgPressed;
+let monitorDisplayImg;
+let monitorDisplayImg2;
+let monitorDisplayImg3;
+let monitorDisplayImg4;
+let flyBugImg;
+let flyBugFlightImg;
+let flyBugFlight2Img;
+let flyBugSquashImg;
+let doughBoyImg;
+let doughBoyImgWalk;
+let doughBoyImgWalk2;
+let doughBoyImgHead;
+let doughBoyImgBelly;
+let bastetImg;
+let bastetImgMad;
+let cosmoImg;
+let cosmoImgMad;
+
+//sound 
+let alarmSound;
+let gameoverSound;
+let tapSound;
+
 function preload() {
     // Ensure the .ttf or .otf font stored in the assets directory
     // is loaded before setup() and draw() are called
-    font = loadFont('assets/font/SegoePrint.ttf');
     monitorFont = loadFont('assets/font/8bitOperatorPlusSC-Regular.ttf');
-}
 
-function setup() {
     //Images
     monitorImg = loadImage('assets/images/monitor.png');
     monitorDeadImg = loadImage('assets/images/monitorDead.png')
@@ -50,7 +86,9 @@ function setup() {
     alarmSound = loadSound('assets/sounds/alarm.mp3');
     gameoverSound = loadSound('assets/sounds/error.mp3');
     tapSound = loadSound('assets/sounds/tap.mp3');
+}
 
+function setup() {
     createCanvas(canvasWidth, canvasHeight);
 
     goSoundPlayed = 0;
@@ -90,6 +128,10 @@ function draw() {
 
     { // Logic
         if (gs.monitor.started) {
+            if (gs.monitor.win) {
+                gs.timer.endTimer();
+            }
+
             if (!gs.timer.done) {
 
                 gs.monitor.update();
@@ -103,7 +145,9 @@ function draw() {
                 if (gs.button.hb.isPressed()) {
                     gs.monitor.love += 10;
                 }
-            } else { // end game logic
+            }
+            
+            if (gs.timer.done || gs.monitor.win){ // end game logic
 
                 gs.monitor.end();
 
@@ -142,7 +186,7 @@ function draw() {
                 gs.events[i].draw();
             }
 
-            if (gs.timer.done) {
+            if (gs.timer.done && !gs.monitor.win) {
                 gameOver();
             }
         }

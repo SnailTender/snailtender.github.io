@@ -46,6 +46,7 @@ function Timer(maxMS, tickMS, callback = () => { }) {
 
     // Cancel setInterval
     this.endTimer = function () {
+        this.ticking = false;
         clearInterval(this.timer);
     };
 
