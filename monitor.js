@@ -7,13 +7,14 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
         frames: frames,
     };
     this.done = false;
-    this.timer = new Timer(0, 300);
     this.pressed = false;
     this.points = 0;
-    this.maxPoints = 2800;
+    this.maxPoints = 1400;
     this.win = false;
     this.love = 0;
     this.started = false;
+    this.callback = function() {this.points += 1;}.bind(this);
+    this.timer = new Timer(0, 30, this.callback);
 
     this.draw = function () {
         if (!this.started) { // draw start screen
@@ -39,7 +40,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
                 }                
                 image(this.imgPressed, canvasWidth * 15 / 40, canvasHeight * 7 / 40, canvasWidth * 12 / 40, canvasHeight * 13 / 40);
             } else { // draw idle
-                if (this.timer.elapsed % 600 == 0) {
+                if (this.timer.elapsed % 600 > 300) {
                     image(this.displayOnMonitor.frames[0], canvasWidth * 15 / 40, canvasHeight * 7 / 40, canvasWidth * 12 / 40, canvasHeight * 13 / 40);
                 } else {
                     image(this.displayOnMonitor.frames[1], canvasWidth * 15 / 40, canvasHeight * 7 / 40, canvasWidth * 12 / 40, canvasHeight * 13 / 40);
@@ -81,8 +82,6 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             }        
         }
 
-        this.points += 1;
-
         if (this.pressed && this.timer.elapsed % 1200 == 0) {
             this.pressed = false;
         }
@@ -93,4 +92,6 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
         this.timer.endTimer();
         this.done = true;
     }
+
 }
+
