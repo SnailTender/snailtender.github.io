@@ -13,25 +13,29 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
     this.maxPoints = 5000;
     this.win = false;
     this.love = 0;
+    this.started = false;
 
     this.draw = function() {
-        if (this.win) {
+        if (!this.started) { // draw start screen
+            stroke(0, 0, 0);
+            strokeWeight(1);
+            textFont(monitorFont);
+            textSize(20);
+            textAlign(0, 0);
+            text("Virtual Snail Buddy\n\n     Press Start!", canvasWidth*18/40, canvasHeight*14/40);
+        } else if (this.win) { // draw win screen
             image(this.imgWin, canvasWidth*15/40, canvasHeight*7/40, canvasWidth*12/40, canvasHeight*13/40);
-        }
-
-        if (this.pressed && !this.win && !this.done) {
-            image(this.imgPressed, canvasWidth*15/40, canvasHeight*7/40, canvasWidth*12/40, canvasHeight*13/40);
-        } else {
-            if (this.timer.elapsed % 600 == 0) {
-                image(this.displayOnMonitor.frames[0], canvasWidth*15/40, canvasHeight*7/40, canvasWidth*12/40, canvasHeight*13/40);
-            } else {
-                image(this.displayOnMonitor.frames[1], canvasWidth*15/40, canvasHeight*7/40, canvasWidth*12/40, canvasHeight*13/40);
+            image(this.imgWin, canvasWidth*15/40, canvasHeight*7/40, canvasWidth*12/40, canvasHeight*13/40);
+        } else if (!this.done) { // draw main gain screen
+            if (this.pressed) { // draw pressed
+                image(this.imgPressed, canvasWidth*15/40, canvasHeight*7/40, canvasWidth*12/40, canvasHeight*13/40);
+            } else { // draw idle
+                if (this.timer.elapsed % 600 == 0) {
+                    image(this.displayOnMonitor.frames[0], canvasWidth*15/40, canvasHeight*7/40, canvasWidth*12/40, canvasHeight*13/40);
+                } else {
+                    image(this.displayOnMonitor.frames[1], canvasWidth*15/40, canvasHeight*7/40, canvasWidth*12/40, canvasHeight*13/40);
+                }
             }
-        }
-
-        if (this.win) {
-            image(this.imgWin, canvasWidth*15/40, canvasHeight*7/40, canvasWidth*12/40, canvasHeight*13/40);
-        } else {
             if (this.points < this.maxPoints) {
                 x = map(this.points, 0, this.maxPoints, canvasWidth*15/40, (canvasWidth*15/40)+(canvasWidth*12/40));
             } else {
@@ -44,6 +48,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             strokeWeight(1);
             textFont(monitorFont);
             textSize(10);
+            textAlign(0, 0);
             text("LOVE: " + this.love, canvasWidth*15/40 + 40, canvasHeight*9/40 + 20);
         }
 

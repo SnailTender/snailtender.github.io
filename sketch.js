@@ -100,54 +100,50 @@ function setup() {
 
     // On screen events
     gs.events = [];
-
-    // main game timer ticks every second and ends at 4 seconds
-    gs.timer = new Timer(3000, 1000, onGameTimerTick);
 }
 
 function draw() {
     background(220);
 
-
-
     { // Logic
-        if (gs.monitor.win) {
-            gs.timer.endTimer();
-        }
-
-        if (!gs.timer.done) {
-
-
-            gs.monitor.update();
-
-            if (gs.button.hb.isPressed()) {
-                gs.timer.reset();
-            } else {
-                gs.timer.resume();
+        if (gs.monitor.started) {
+            if (gs.monitor.win) {
+                gs.timer.endTimer();
             }
 
-            if (gs.button.hb.isPressed()) {
-                gs.monitor.love += 10;
-            }
+            if (!gs.timer.done) {
 
-            // Update all events
-            for (i = 0; i < gs.events.length; i++) {
-                // remove event when compeleted
-                if (gs.events[i].done && !gs.events[i].transition.isTransitioning()) {
-                    gs.events.splice(i, 1);
-                    i--;
-                    continue;
+                gs.monitor.update();
+
+                if (gs.button.hb.isPressed()) {
+                    gs.timer.reset();
+                } else {
+                    gs.timer.resume();
                 }
 
-                gs.events[i].update();
-            }
-        } else { // end game logic
+                if (gs.button.hb.isPressed()) {
+                    gs.monitor.love += 10;
+                }
 
-            gs.monitor.end();
+                // Update all events
+                for (i = 0; i < gs.events.length; i++) {
+                    // remove event when compeleted
+                    if (gs.events[i].done && !gs.events[i].transition.isTransitioning()) {
+                        gs.events.splice(i, 1);
+                        i--;
+                        continue;
+                    }
 
-            // End all events when the game ends
-            for (i = 0; i < gs.events.length; i++) {
-                gs.events[i].end();
+                    gs.events[i].update();
+                }
+            } else { // end game logic
+
+                gs.monitor.end();
+
+                // End all events when the game ends
+                for (i = 0; i < gs.events.length; i++) {
+                    gs.events[i].end();
+                }
             }
         }
     }
@@ -156,17 +152,20 @@ function draw() {
         image(gs.desk.img, 0, 0, width, height);
 
         gs.monitor.draw();
-
         gs.button.draw();
-        gs.timer.drawTop();
 
-        // Draw all events
-        for (i = 0; i < gs.events.length; i++) {
-            gs.events[i].draw();
-        }
-
-        if (gs.timer.done) {
-            gameOver();
+        // only draw game elements after we have started
+        if (gs.monitor.started) {
+            gs.timer.drawTop();
+    
+            // Draw all events
+            for (i = 0; i < gs.events.length; i++) {
+                gs.events[i].draw();
+            }
+    
+            if (gs.timer.done) {
+                gameOver();
+            }
         }
 
         // Draw hand last
@@ -176,6 +175,12 @@ function draw() {
 
 // Pressed + Released
 function mouseClicked() {
+    // Start the game
+    if (!gs.monitor.started && gs.button.hb.isTouchingMouse()) {
+        // main game timer ticks every second and ends at 4 seconds
+        gs.timer = new Timer(3000, 1000, onGameTimerTick);
+        gs.monitor.started = true;
+    }
 
     // If game is over
     if (gs.timer.done && gs.button.hb.isTouchingMouse()) {
@@ -228,6 +233,7 @@ function onGameTimerTick(tickCount) {
     if (tickCount == 7) {
         gs.events.push(glassesGuy);
     }
+    
     if (tickCount == 2) {
         gs.events.push(flyBug);
     }
