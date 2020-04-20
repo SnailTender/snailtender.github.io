@@ -37,9 +37,9 @@ function Cat(img, imgPressed, meow) {
         }
 
         // debug 
-        fill(204, 101, 192, 127);
-        stroke(127, 63, 120);
-        ellipse(this.hb.x, this.hb.y, this.hb.r)
+        // fill(204, 101, 192, 127);
+        // stroke(127, 63, 120);
+        // ellipse(this.hb.x, this.hb.y, this.hb.r)
     }
 
 }
