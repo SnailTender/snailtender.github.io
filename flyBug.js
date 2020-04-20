@@ -1,38 +1,57 @@
 function FlyBug(img, imgFlight, imgFlight2, imgSquash, hitbox) {
     this.img = img;
     this.imgFlight = imgFlight;
-	this.imgFlight1 = imgFlight2;
+	this.imgFlight2 = imgFlight2;
 	this.imgSquash = imgSquash;
     this.hb = hitbox;
     this.done = false;
     this.hasBeenPressed = false;
     this.transition = new Transition(canvasWidth, 0, canvasWidth - 400);
     this.hobble = 0;
-
+	
+	flap = 0;
 
     this.update = function () {
         if (this.transition.isTransitioning()) {
             this.transition.update();
-            this.hobble = 10 / 2 + 10 * Math.sin(this.transition.current.x / 20);
+            this.hobble = 10 / 2 + 10 * Math.sin(this.transition.current.x / 10);
         } else {
             this.hobble = 0;
         }
+		
+		this.hb.y = this.transition.current.y + this.hobble + canvasHeight/15;
+		this.hb.x = this.transition.current.x + canvasWidth/25;
     }
 
     this.end = function () {
-        this.transition.transitionOut();
+        //this.transition.transitionOut();
         this.done = true;
     }
 
     this.draw = function () {
-        if (this.hb.isPressed() && !this.transition.isTransitioning()) {
+        if (this.hb.isPressed()) {
             this.hasBeenPressed = true;
         }
 
         if (this.hasBeenPressed) {
             image(this.imgSquash, this.transition.current.x, this.transition.current.y + this.hobble);
+			this.transition.transitioning.in = false
         } else {
-            image(this.img, this.transition.current.x, this.transition.current.y + this.hobble);
+            //if the fly is not flying and still
+			if(!this.transition.isTransitioning()){
+				image(this.img, this.transition.current.x, this.transition.current.y + this.hobble);
+			} 
+			//fly is flying and moving around
+			else {
+				//wing flap animation
+				if(flap) {
+					image(this.imgFlight, this.transition.current.x, this.transition.current.y + this.hobble);
+					flap = 0;
+				} else {
+					image(this.imgFlight2, this.transition.current.x, this.transition.current.y + this.hobble);
+					flap = 1;
+				}	
+			}
         }
 
         // debug 
