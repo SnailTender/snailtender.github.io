@@ -320,9 +320,17 @@ function onGameTimerTick(tickCount) {
     }
 
     if (tickCount == 200) {
-        gs.events.push(new Bastet(
+        gs.events.push(new Cat(
             bastetImg,
             bastetImgMad,
+            catTouchSound,
+        ));
+    }
+
+    if (tickCount == 220) {
+        gs.events.push(new Cat(
+            cosmoImg,
+            cosmoImgMad,
             catTouchSound,
         ));
     }
@@ -361,9 +369,15 @@ function onGameTimerTick(tickCount) {
             doughBoyWalkingSound,
         ));
 
-        gs.events.push(new Bastet(
+        gs.events.push(new Cat(
             bastetImg,
             bastetImgMad,
+            catTouchSound,
+        ));
+
+        gs.events.push(new Cat(
+            cosmoImg,
+            cosmoImgMad,
             catTouchSound,
         ));
     }
