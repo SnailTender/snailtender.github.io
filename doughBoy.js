@@ -39,6 +39,7 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxB
         if (this.hb.isPressed() && !this.transition.isTransitioning()) {
             this.hasBeenPressed = true;
             if (!this.bellySound.isPlaying()) {
+                this.walkingSound.setVolume(0.3);
                 this.bellySound.play();
             }
         }
@@ -57,6 +58,7 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxB
             }
         } else if (this.hbHead.isPressed()) {
             if (!this.faceSound.isPlaying()){
+                this.walkingSound.setVolume(0.5);
                 this.faceSound.play();
             }
             image(this.imgHead, this.transition.current.x, this.transition.current.y + this.hobble);
