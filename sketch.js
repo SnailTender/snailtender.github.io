@@ -206,17 +206,13 @@ function mousePressed() {
 // Text on gameover screen
 function gameOver() {
     // Set text characteristics
-    textFont(font);
+    textFont(monitorFont);
 
     stroke('white');
-    strokeWeight(5);
-    textAlign(CENTER, CENTER);
+    strokeWeight(2);
 
-    textSize(80);
-    text("Your Virtual Snail Died!", width / 2, height / 2);
-
-    textSize(40);
-    text("\n\n\nYou went too long without loving him. Click to try again", width / 2, height / 2);
+    textSize(16);
+    text("\n\n\nYou went too long without loving him.\n                Click to try again", width * 16 / 40, height * 15 / 40);
 
     if (!gameoverSound.isPlaying() && !goSoundPlayed) {
         gameoverSound.play();
