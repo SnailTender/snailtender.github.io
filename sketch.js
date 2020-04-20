@@ -201,7 +201,7 @@ function mouseClicked() {
     // Start the game
     if (!gs.monitor.started && gs.button.hb.isTouchingMouse()) {
         // main game timer ticks every second and ends at 4 seconds
-        gs.timer = new Timer(3000, 1000, onGameTimerTick);
+        gs.timer = new Timer(3000, 100, onGameTimerTick);
         gs.monitor.started = true;
     }
 
@@ -245,7 +245,7 @@ function gameOver() {
 
 // Callback function called for in game timer
 function onGameTimerTick(tickCount) {
-    if (tickCount == 5) {
+    if (tickCount == 50) {
         gs.events.push(new Clock(
             alarmImg,
             alarmImgPressed,
@@ -254,14 +254,14 @@ function onGameTimerTick(tickCount) {
         ));
     }
 
-    if (tickCount == 10) {
+    if (tickCount == 100) {
         gs.events.push(new GlassesGuy(
             glassesGuyImg,
             glassesGuyImgPressed,
         ));
     }
 
-    if (tickCount == 12) {
+    if (tickCount == 120) {
         gs.events.push(new FlyBug(
             flyBugImg,
             flyBugFlightImg,
@@ -270,7 +270,7 @@ function onGameTimerTick(tickCount) {
         ));
     }
 
-    if (tickCount == 17) {
+    if (tickCount == 170) {
         gs.events.push(new DoughBoy(
             doughBoyImg,
             doughBoyImgWalk,
@@ -282,14 +282,14 @@ function onGameTimerTick(tickCount) {
         ));
     }
 
-    if (tickCount == 20) {
+    if (tickCount == 200) {
         gs.events.push(new Bastet(
             bastetImg,
             bastetImgMad,
         ));
     }
 
-    if (tickCount == 35) {
+    if (tickCount == 350) {
         gs.events.push(new Clock(
             alarmImg,
             alarmImgPressed,
