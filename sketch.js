@@ -210,14 +210,14 @@ function onGameTimerTick(tickCount) {
         ));
     }
 
-    if (tickCount == 2) {
+    if (tickCount == 10) {
         gs.events.push(new GlassesGuy(
             glassesGuyImg,
             glassesGuyImgPressed,
         ));
     }
 
-    if (tickCount == 2) {
+    if (tickCount == 12) {
         gs.events.push(new FlyBug(
             flyBugImg,
             flyBugFlightImg,
