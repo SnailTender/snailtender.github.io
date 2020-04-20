@@ -373,7 +373,8 @@ function onGameTimerTick(tickCount) {
             flyBugFlightImg,
             flyBugFlight2Img,
             flyBugSquashImg,
-            buzzSound
+            buzzSound,
+			splatSound,
         ));
 
         gs.events.push(new DoughBoy(
