@@ -122,7 +122,7 @@ function setup() {
 	bastet = new Bastet(
 		bastetImg,
 		bastetImgMad,
-		new HitBox(random(canvasWidth+150), canvasHeight-150, 150),
+		new HitBox(random(canvasWidth), canvasHeight-150, 150),
 	);
 
     // On screen events
@@ -253,7 +253,7 @@ function onGameTimerTick(tickCount) {
         gs.events.push(alarmClock);
     }
 
-    if (tickCount == 7) {
+    if (tickCount == 10) {
         gs.events.push(glassesGuy);
     }
 
@@ -261,11 +261,11 @@ function onGameTimerTick(tickCount) {
         gs.events.push(flyBug);
     }
 	
-	if(tickCount == 10) {
+	if(tickCount == 17) {
 		gs.events.push(doughBoy);
 	}
 	
-	if (tickCount == 1) {
+	if (tickCount == 20) {
 		gs.events.push(bastet);
 	}
 }
