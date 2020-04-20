@@ -13,7 +13,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
     this.win = false;
     this.love = 0;
     this.started = false;
-    this.callback = function() {this.points += 1;}.bind(this);
+    this.callback = function() {if (this.started) {this.points += 1;}}.bind(this);
     this.timer = new Timer(0, 30, this.callback);
 
     this.draw = function () {
