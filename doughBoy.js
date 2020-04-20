@@ -1,4 +1,4 @@
-function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxBelly) {
+function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxBelly, touchBellySound, touchFaceSound, walkingSound) {
     this.img = img;
     this.imgWalk = imgWalk;
     this.imgWalk2 = imgWalk2;
@@ -11,6 +11,9 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxB
     this.transition = new Transition(0, 0, 600);
     this.hobble = 0;
     this.timer = new Timer(0, 250);
+    this.bellySound = touchBellySound;
+    this.faceSound = touchFaceSound;
+    this.walkingSound = walkingSound;
 
     this.update = function () {
         this.timer.resume();
@@ -35,19 +38,30 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxB
 
         if (this.hb.isPressed() && !this.transition.isTransitioning()) {
             this.hasBeenPressed = true;
+            if (!this.bellySound.isPlaying()) {
+                this.bellySound.play();
+            }
         }
 
         if (this.hasBeenPressed) {
             image(this.imgBelly, this.transition.current.x, this.transition.current.y + this.hobble);
         } else if (this.transition.isTransitioning()) {
+            if (!this.walkingSound.isPlaying()) {
+                this.walkingSound.setVolume(0.1);
+                this.walkingSound.play();
+            }
             if (this.timer.elapsed % 500 == 0) {
                 image(this.imgWalk2, this.transition.current.x, this.transition.current.y);
             } else {
                 image(this.imgWalk, this.transition.current.x, this.transition.current.y);
             }
         } else if (this.hbHead.isPressed()) {
+            if (!this.faceSound.isPlaying()){
+                this.faceSound.play();
+            }
             image(this.imgHead, this.transition.current.x, this.transition.current.y + this.hobble);
         } else {
+            this.walkingSound.stop();
             image(this.img, this.transition.current.x, this.transition.current.y);
         }
 

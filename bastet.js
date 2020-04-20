@@ -1,10 +1,11 @@
-function Bastet(img, imgPressed) {
+function Bastet(img, imgPressed, meow) {
     this.img = img;
     this.imgPressed = imgPressed;
     this.hb = new HitBox(0, 0, 150),
-        this.done = false;
+    this.done = false;
     this.hasBeenPressed = false;
     this.transition = new Transition(canvasWidth, canvasHeight * 24 / 40, random(canvasWidth) - 150);
+    this.meowSound = meow;
 
     this.update = function () {
         if (this.transition.isTransitioning()) {
@@ -22,6 +23,9 @@ function Bastet(img, imgPressed) {
 
     this.draw = function () {
         if (this.hb.isPressed()) {
+            if (!this.meowSound.isPlaying()) {
+                this.meowSound.play();
+            }
             image(this.imgPressed, this.transition.current.x, this.transition.current.y);
         } else {
             image(this.img, this.transition.current.x, this.transition.current.y);

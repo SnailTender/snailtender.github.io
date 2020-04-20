@@ -1,4 +1,4 @@
-function GlassesGuy(img, imgPressed) {
+function GlassesGuy(img, imgPressed, walkingSound, touchSound) {
     this.img = img;
     this.imgPressed = imgPressed;
     this.hb = new HitBox(0, 0, canvasHeight / 18);
@@ -7,14 +7,23 @@ function GlassesGuy(img, imgPressed) {
     this.transition = new Transition(canvasWidth, 0, canvasWidth - 400);
     this.hobble = 0;
     this.wait = 0;
+    this.walkingSound = walkingSound;
+    this.touchSound = touchSound;
 
     this.update = function () {
         if (this.hb.isPressed()) {
+            if (!this.touchSound.isPlaying()) {
+                this.touchSound.play();
+            }
             this.hasBeenPressed = true;
             this.transition = new Transition(this.transition.current.x, this.transition.current.y, canvasWidth + 400);
         }
 
         if (this.transition.isTransitioning()) {
+            if (!this.walkingSound.isPlaying()) {
+                this.walkingSound.setVolume(0.3);
+                this.walkingSound.play();
+            }
             this.transition.update();
             this.hobble = 10 / 2 + 10 * Math.sin(this.transition.current.x / 20);
         } else {

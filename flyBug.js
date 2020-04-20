@@ -1,8 +1,9 @@
-function FlyBug(img, imgFlight, imgFlight2, imgSquash) {
+function FlyBug(img, imgFlight, imgFlight2, imgSquash, buzzSound) {
     this.img = img;
     this.imgFlight = imgFlight;
     this.imgFlight2 = imgFlight2;
     this.imgSquash = imgSquash;
+    this.sound = buzzSound;
     this.hb = new HitBox(canvasWidth * 33 / 40, canvasHeight / 3, canvasHeight / 18);
     this.done = false;
     this.hasBeenPressed = false;
@@ -15,9 +16,15 @@ function FlyBug(img, imgFlight, imgFlight2, imgSquash) {
 
     this.update = function () {
         if (this.transition.isTransitioning()) {
+            if (!this.sound.isPlaying()) {
+                this.sound.setVolume(0.1);
+                this.sound.play();
+            }
+        
             this.transition.update();
             this.hobble = 10 / 2 + 10 * Math.sin(this.transition.current.x / 10);
         } else {
+            this.sound.stop();
             this.hobble = 0;
 
             if (this.wait >= 100) {

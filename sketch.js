@@ -43,6 +43,17 @@ let cosmoImgMad;
 let alarmSound;
 let gameoverSound;
 let tapSound;
+let backgroundSound;
+let buzzSound;
+let doughBoyTouchBellySound;
+let doughBoyTouchFaceSound;
+let doughBoyWalkingSound;
+let glassesGuyWalkingSound;
+let glassesGuyTouchSound;
+let catTouchSound;
+let heartSound;
+let victorySound;
+let snailtime;
 
 function preload() {
     // Ensure the .ttf or .otf font stored in the assets directory
@@ -86,6 +97,17 @@ function preload() {
     alarmSound = loadSound('assets/sounds/alarm.mp3');
     gameoverSound = loadSound('assets/sounds/error.mp3');
     tapSound = loadSound('assets/sounds/tap.mp3');
+    backgroundSound = loadSound('assets/sounds/background.mp3');
+    buzzSound = loadSound('assets/sounds/buzz.mp3');
+    doughBoyTouchBellySound = loadSound('assets/sounds/doughboytouch.mp3');
+    doughBoyTouchFaceSound = loadSound('assets/sounds/doughboyfacetouch.mp3');
+    doughBoyWalkingSound = loadSound('assets/sounds/doughboywalking.mp3');
+    glassesGuyWalkingSound = loadSound('assets/sounds/guywalkingsound.mp3');
+    glassesGuyTouchSound = loadSound('assets/sounds/touchglasses.mp3');
+    catTouchSound = loadSound('assets/sounds/meow.mp3');
+    heartSound = loadSound('assets/sounds/heartsound.mp3');
+    victorySound = loadSound('assets/sounds/victory.mp3');
+    snailtime = loadSound('assets/sounds/snailtime.mp3');
 }
 
 function setup() {
@@ -125,6 +147,11 @@ function setup() {
 
 function draw() {
     background(220);
+
+    if (!backgroundSound.isPlaying()) {
+        backgroundSound.setVolume(0.1);
+        backgroundSound.play();
+    }
 
     { // Logic
         if (gs.monitor.started) {
@@ -203,6 +230,10 @@ function mouseClicked() {
         // main game timer ticks every second and ends at 4 seconds
         gs.timer = new Timer(3000, 100, onGameTimerTick);
         gs.monitor.started = true;
+
+        if (!snailtime.isPlaying()) {
+            snailtime.play();
+        }
     }
 
     // If game is over
@@ -258,6 +289,8 @@ function onGameTimerTick(tickCount) {
         gs.events.push(new GlassesGuy(
             glassesGuyImg,
             glassesGuyImgPressed,
+            glassesGuyWalkingSound,
+            glassesGuyTouchSound,
         ));
     }
 
@@ -266,7 +299,8 @@ function onGameTimerTick(tickCount) {
             flyBugImg,
             flyBugFlightImg,
             flyBugFlight2Img,
-            flyBugSquashImg
+            flyBugSquashImg,
+            buzzSound
         ));
     }
 
@@ -279,6 +313,9 @@ function onGameTimerTick(tickCount) {
             doughBoyImgBelly,
             new HitBox(760, 250, 40),
             new HitBox(850, 450, 100),
+            doughBoyTouchBellySound,
+            doughBoyTouchFaceSound,
+            doughBoyWalkingSound,
         ));
     }
 
@@ -286,6 +323,7 @@ function onGameTimerTick(tickCount) {
         gs.events.push(new Bastet(
             bastetImg,
             bastetImgMad,
+            catTouchSound,
         ));
     }
 
@@ -299,12 +337,15 @@ function onGameTimerTick(tickCount) {
         gs.events.push(new GlassesGuy(
             glassesGuyImg,
             glassesGuyImgPressed,
+            glassesGuyWalkingSound,
+            glassesGuyTouchSound,
         ));
         gs.events.push(new FlyBug(
         flyBugImg,
         flyBugFlightImg,
         flyBugFlight2Img,
-        flyBugSquashImg
+        flyBugSquashImg,
+        buzzSound
         ));
         gs.events.push(new DoughBoy(
             doughBoyImg,
@@ -314,10 +355,14 @@ function onGameTimerTick(tickCount) {
             doughBoyImgBelly,
             new HitBox(760, 250, 40),
             new HitBox(850, 450, 100),
+            doughBoyTouchBellySound,
+            doughBoyTouchFaceSound,
+            doughBoyWalkingSound,
         ));
         gs.events.push(new Bastet(
             bastetImg,
             bastetImgMad,
+            catTouchSound,
         ));
     }
 }

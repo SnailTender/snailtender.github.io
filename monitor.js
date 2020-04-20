@@ -31,8 +31,12 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             textSize(20);
             textAlign(LEFT);
             text("Love achieved!\n    Congrats!", canvasWidth * 15 / 40 + 40, canvasHeight * 9 / 40 + 20);
-        } else if (!this.done) { // draw main gain screen
+        } else if (!this.done) { // draw main game screen
             if (this.pressed) { // draw pressed
+                if (!heartSound.isPlaying()) {
+                    heartSound.setVolume(0.1);
+                    heartSound.play();
+                }                
                 image(this.imgPressed, canvasWidth * 15 / 40, canvasHeight * 7 / 40, canvasWidth * 12 / 40, canvasHeight * 13 / 40);
             } else { // draw idle
                 if (this.timer.elapsed % 600 == 0) {
@@ -70,8 +74,11 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             return;
         }
 
-        if (this.points >= this.maxPoints) {
+        if (!this.win && this.points >= this.maxPoints) {
             this.win = true;
+            if (!victorySound.isPlaying()) {
+                victorySound.play();
+            }        
         }
 
         if (this.timer.elapsed % 300 == 0) {
