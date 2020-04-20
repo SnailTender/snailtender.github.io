@@ -8,7 +8,7 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxB
     this.hb = hitboxBelly;
     this.done = false;
     this.hasBeenPressed = false;
-    this.transition = new Transition(0, 0, 600);
+    this.transition = new Transition(-387, 0, 600);
     this.hobble = 0;
     this.timer = new Timer(0, 250);
     this.bellySound = touchBellySound;
