@@ -53,7 +53,7 @@ function FlyBug(img, imgFlight, imgFlight2, imgSquash, buzzSound, splatSound) {
 
         if (this.hasBeenPressed) {
             image(this.imgSquash, this.transition.current.x, this.transition.current.y + this.hobble);
-			if (!this.splatSound.isPlaying()) {
+			if (!this.splatSound.isPlaying() && !this.done) {
 				this.splatSound.setVolume(0.1);
                 this.splatSound.play();
             }
