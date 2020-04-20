@@ -44,7 +44,7 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxB
             }
         }
 
-        if (this.hasBeenPressed) {
+        if (this.hasBeenPressed || this.transition.transitioning.out) {
             image(this.imgBelly, this.transition.current.x, this.transition.current.y + this.hobble);
         } else if (this.transition.isTransitioning()) {
             if (!this.walkingSound.isPlaying()) {
