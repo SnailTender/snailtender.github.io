@@ -5,6 +5,7 @@ let gs;
 let alarmClock;
 let glassesGuy;
 let flyBug;
+let doughBoy;
 const canvasWidth = 1280;
 const canvasHeight = 720;
 
@@ -39,6 +40,11 @@ function setup() {
     flyBugFlightImg = loadImage("assets/images/flyFlight0.png");
     flyBugFlight2Img = loadImage("assets/images/flyFlight1.png");
     flyBugSquashImg = loadImage("assets/images/flySquash.png");
+	doughBoyImg = loadImage("assets/images/doughBoy.png");
+	doughBoyImgWalk = loadImage("assets/images/doughBoyWalk1.png");
+	doughBoyImgWalk2 = loadImage("assets/images/doughBoyWalk2.png");
+	doughBoyImgHead = loadImage("assets/images/doughBoyHead.png");
+	doughBoyImgBelly = loadImage("assets/images/doughBoyBelly.png");
 
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
@@ -96,6 +102,16 @@ function setup() {
         flyBugFlight2Img,
         flyBugSquashImg,
         new HitBox(canvasWidth * 33 / 40, canvasHeight / 3, canvasHeight / 18),
+    );
+	
+	doughBoy = new DoughBoy(
+		doughBoyImg,
+		doughBoyImgWalk,
+		doughBoyImgWalk2,
+		doughBoyImgHead,
+		doughBoyImgBelly,
+        new HitBox(canvasWidth / 10, canvasHeight / 10, canvasHeight / 18),
+		new HitBox(canvasWidth / 10, canvasHeight / 20, canvasHeight / 18),
     );
 
     // On screen events
@@ -233,4 +249,8 @@ function onGameTimerTick(tickCount) {
     if (tickCount == 2) {
         gs.events.push(flyBug);
     }
+	
+	if(tickCount == 3) {
+		gs.events.push(doughBoy);
+	}
 }
