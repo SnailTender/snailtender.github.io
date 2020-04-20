@@ -149,7 +149,7 @@ function draw() {
     background(220);
 
     if (!backgroundSound.isPlaying()) {
-        backgroundSound.setVolume(0.1);
+        backgroundSound.setVolume(0.2);
         backgroundSound.play();
     }
 
@@ -232,6 +232,7 @@ function mouseClicked() {
         gs.monitor.started = true;
 
         if (!snailtime.isPlaying()) {
+            backgroundSound.setVolume(0.5);
             snailtime.play();
         }
     }
@@ -269,6 +270,7 @@ function gameOver() {
     text("\n\n\nYou went too long without loving him.\n                Click to try again", width * 16 / 40, height * 15 / 40);
 
     if (!gameoverSound.isPlaying() && !goSoundPlayed) {
+        backgroundSound.setVolume(0.5);
         gameoverSound.play();
         goSoundPlayed = 1;
     }
