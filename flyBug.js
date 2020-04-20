@@ -9,9 +9,9 @@ function FlyBug(img, imgFlight, imgFlight2, imgSquash) {
     this.transition = new Transition(canvasWidth, 200, canvasWidth - 100);
     this.hobble = 0;
 
-    flap = 0;
-    wait = 0;
-    newPosition = canvasWidth - 400;
+    this.flap = 0;
+    this.wait = 0;
+    this.newPosition = canvasWidth - 400;
 
     this.update = function () {
         if (this.transition.isTransitioning()) {
@@ -20,12 +20,12 @@ function FlyBug(img, imgFlight, imgFlight2, imgSquash) {
         } else {
             this.hobble = 0;
 
-            if (wait >= 100) {
-                newPosition = Math.floor(Math.random() * Math.floor(canvasWidth));
-                this.transition = new Transition(this.transition.current.x, this.transition.current.y, newPosition);
-                wait = 0;
+            if (this.wait >= 100) {
+                this.newPosition = Math.floor(Math.random() * Math.floor(canvasWidth));
+                this.transition = new Transition(this.transition.current.x, this.transition.current.y, this.newPosition);
+                this.wait = 0;
             } else {
-                wait += 1;
+                this.wait += 1;
             }
         }
 
@@ -52,12 +52,12 @@ function FlyBug(img, imgFlight, imgFlight2, imgSquash) {
                 image(this.img, this.transition.current.x, this.transition.current.y + this.hobble);
             } else { //fly is flying and moving around
                 //wing flap animation
-                if (flap) {
+                if (this.flap) {
                     image(this.imgFlight, this.transition.current.x, this.transition.current.y + this.hobble);
-                    flap = 0;
+                    this.flap = 0;
                 } else {
                     image(this.imgFlight2, this.transition.current.x, this.transition.current.y + this.hobble);
-                    flap = 1;
+                    this.flap = 1;
                 }
             }
         }
