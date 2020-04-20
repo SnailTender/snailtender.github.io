@@ -19,7 +19,7 @@ function Transition(x, y, destX) {
 
     this.speed = 5;
 
-    this.update = function() {
+    this.update = function () {
         if (this.transitioning.in) {
             this.moveInTransition();
         }
@@ -29,15 +29,15 @@ function Transition(x, y, destX) {
         }
     }
 
-    this.isTransitioning = function() {
+    this.isTransitioning = function () {
         return this.transitioning.in || this.transitioning.out;
     }
 
-    this.transitionOut = function() {
+    this.transitionOut = function () {
         return this.transitioning.out = true;
     }
 
-    this.moveInTransition = function() {
+    this.moveInTransition = function () {
         if (this.dest.x == this.current.x) {
             this.transitioning.in = false;
             return;
@@ -58,7 +58,7 @@ function Transition(x, y, destX) {
         }
     };
 
-    this.moveOutTransition = function() {
+    this.moveOutTransition = function () {
         if (this.start.x == this.current.x) {
             this.transitioning.out = false;
             return;
@@ -79,7 +79,7 @@ function Transition(x, y, destX) {
         }
     };
 
-    this.fadeOutTransition = function() {
+    this.fadeOutTransition = function () {
         if (this.tint <= 0) {
             this.tint = 0;
             this.transitioning = false;
@@ -92,5 +92,5 @@ function distanceBetweenPoints(x1, y1, x2, y2) {
     var a = x1 - x2;
     var b = y1 - y2;
 
-    return Math.sqrt( a*a + b*b );
+    return Math.sqrt(a * a + b * b);
 }

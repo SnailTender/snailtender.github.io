@@ -157,12 +157,12 @@ function draw() {
         // only draw game elements after we have started
         if (gs.monitor.started) {
             gs.timer.drawTop();
-    
+
             // Draw all events
             for (i = 0; i < gs.events.length; i++) {
                 gs.events[i].draw();
             }
-    
+
             if (gs.timer.done) {
                 gameOver();
             }
@@ -233,7 +233,7 @@ function onGameTimerTick(tickCount) {
     if (tickCount == 7) {
         gs.events.push(glassesGuy);
     }
-    
+
     if (tickCount == 2) {
         gs.events.push(flyBug);
     }
