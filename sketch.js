@@ -306,7 +306,7 @@ function onGameTimerTick(tickCount) {
         ));
     }
 
-    if (tickCount == 20 ) { //170
+    if (tickCount == 170 ) {
         gs.events.push(new DoughBoy(
             doughBoyImg,
             doughBoyImgWalk,
@@ -334,7 +334,7 @@ function onGameTimerTick(tickCount) {
             clock12Img,
             alarmSound,
         ));
-        
+
         gs.events.push(new GlassesGuy(
             glassesGuyImg,
             glassesGuyImgPressed,

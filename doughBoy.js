@@ -8,7 +8,7 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, touchBellySound, to
     this.hb = new HitBox(0, 0, 100);
     this.done = false;
     this.hasBeenPressed = false;
-    this.transition = new Transition(-387, 0, 600);
+    this.transition = new Transition(-387, 0, Math.floor(Math.random() * Math.floor(canvasWidth - 400)));
     this.timer = new Timer(0, 250);
     this.bellySound = touchBellySound;
     this.faceSound = touchFaceSound;
@@ -22,7 +22,7 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, touchBellySound, to
             this.transition.update();
         } 
         
-        if (this.wait >= 100 && !this.hasBeenPressed) {
+        if (this.wait >= 100 && !this.hasBeenPressed && !this.transition.isTransitioning() && !this.done) {
             let newPosition = Math.floor(Math.random() * Math.floor(canvasWidth - 400));
             this.transition = new Transition(this.transition.current.x, this.transition.current.y, newPosition);
             this.wait = 0;
@@ -33,13 +33,13 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, touchBellySound, to
         this.hb.y = this.transition.current.y + canvasHeight * 27 / 40;
         this.hb.x = this.transition.current.x + canvasWidth * 4 / 25;
 
-        this.hbHead.y = this.transition.current.y  + canvasHeight / 3;
+        this.hbHead.y = this.transition.current.y + canvasHeight / 3;
         this.hbHead.x = this.transition.current.x + canvasWidth * 6 / 40;
     }
 
     this.end = function () {
         if (!this.done){
-            this.transition = new Transition(this.transition.current.x, this.transition.current.y, -387);
+            this.transition = new Transition(this.transition.current.x, this.transition.current.y, -300);
             this.done = true;
         }
     }
@@ -64,7 +64,7 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, touchBellySound, to
             image(this.imgHead, this.transition.current.x, this.transition.current.y);
 
         } else {
-            if (this.transition.isTransitioning()) {
+            if (this.transition.isTransitioning() && !this.done) { // remove the done check if you want him to walk back out
                 if (!this.walkingSound.isPlaying()) {
                     this.walkingSound.setVolume(0.1);
                     this.walkingSound.play();
