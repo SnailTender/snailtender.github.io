@@ -38,6 +38,9 @@ let bastetImg;
 let bastetImgMad;
 let cosmoImg;
 let cosmoImgMad;
+let boomboxOff;
+let boomboxOn;
+let boomboxOnSound;
 
 //sound 
 let alarmSound;
@@ -54,13 +57,13 @@ let catTouchSound;
 let heartSound;
 let victorySound;
 let snailtime;
+let boomboxSound;
 
 function preload() {
-    // Ensure the .ttf or .otf font stored in the assets directory
-    // is loaded before setup() and draw() are called
+    // fonts
     monitorFont = loadFont('assets/font/8bitOperatorPlusSC-Regular.ttf');
 
-    //Images
+    // images
     monitorImg = loadImage('assets/images/monitor.png');
     monitorDeadImg = loadImage('assets/images/monitorDead.png')
     deskImg = loadImage('assets/images/desk.png');
@@ -92,6 +95,9 @@ function preload() {
     bastetImgMad = loadImage("assets/images/bastetMad.png");
     cosmoImg = loadImage("assets/images/cosmo.png");
     cosmoImgMad = loadImage("assets/images/cosmoMad.png");
+    boomboxOff = loadImage("assets/images/boomboxOff.png");
+    boomboxOn = loadImage("assets/images/boomboxOn.png");
+    boomboxOnSound = loadImage("assets/images/boomboxOnSound.png");
 
     // sound
     alarmSound = loadSound('assets/sounds/alarm.mp3');
@@ -108,6 +114,7 @@ function preload() {
     heartSound = loadSound('assets/sounds/heartsound.mp3');
     victorySound = loadSound('assets/sounds/victory.mp3');
     snailtime = loadSound('assets/sounds/snailtime.mp3');
+    boomboxSound = loadSound('assets/sounds/boombox.mp3');
 }
 
 function setup() {
@@ -335,7 +342,16 @@ function onGameTimerTick(tickCount) {
         ));
     }
 
-    if (tickCount == 350) {
+    if (tickCount == 280) {
+        gs.events.push(new Boombox(
+            boomboxOff,
+            boomboxOn,
+            boomboxOnSound,
+            boomboxSound,
+        ));
+    }
+
+    if (tickCount == 400) {
         gs.events.push(new Clock(
             alarmImg,
             alarmImgPressed,
@@ -379,6 +395,13 @@ function onGameTimerTick(tickCount) {
             cosmoImg,
             cosmoImgMad,
             catTouchSound,
+        ));
+
+        gs.events.push(new Boombox(
+            boomboxOff,
+            boomboxOn,
+            boomboxOnSound,
+            boomboxSound,
         ));
     }
 }
