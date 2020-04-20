@@ -5,10 +5,10 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxB
 	this.imgHead = imgHead;
 	this.imgBelly = imgBelly;
     this.hbHead = hitboxHead;
-	this.hbBelly = hitboxBelly;
+	this.hb = hitboxBelly;
     this.done = false;
-    this.hasBeenPressed = false;
-    this.transition = new Transition(0, 0, 500);
+	this.hasBeenPressed = false;
+    this.transition = new Transition(0, 0, 600);
     this.hobble = 0;
 	this.timer = new Timer(0, 250);
 
@@ -21,6 +21,9 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxB
         } else {
             this.hobble = 0;
         }
+		
+		//this.hbBelly.x = this.transition.current.x + 160;
+		//this.hbHead.x = this.transition.current.x + 200;
     }
 
     this.end = function () {
@@ -29,34 +32,29 @@ function DoughBoy(img, imgWalk, imgWalk2, imgHead, imgBelly, hitboxHead, hitboxB
     }
 
     this.draw = function () {
-		if ( (this.hbHead.isPressed() || this.hbBelly.isPressed()) && !this.transition.isTransitioning() ) {
-            this.hasBeenPressed = true;
+
+		if ( this.hb.isPressed() && !this.transition.isTransitioning() ) {
+				this.hasBeenPressed = true;
         }
-		
-		if(this.transition.isTransitioning()) {
-			console.log(this.timer);
-			
+
+        if (this.hasBeenPressed) {
+			image(this.imgBelly, this.transition.current.x, this.transition.current.y + this.hobble);
+        } else if( this.transition.isTransitioning() ){
             if (this.timer.elapsed % 500 == 0) {
                 image(this.imgWalk2, this.transition.current.x, this.transition.current.y);
             } else {
 				image(this.imgWalk, this.transition.current.x, this.transition.current.y);
 			}
-			
-		} else if(this.hasBeenPressed){
-				if(this.hbHead.isPressed) {
-					image(this.imgHead, this.transition.current.x, this.transition.current.y + this.hobble);
-				} else {
-					image(this.imgBelly, this.transition.current.x, this.transition.current.y + this.hobble);
-				}
-		} else {
-				image(this.img, this.transition.current.x, this.transition.current.y + this.hobble);
+		} else if(this.hbHead.isPressed()) {
+				image(this.imgHead, this.transition.current.x, this.transition.current.y + this.hobble);		
+        } else {
+			image(this.img, this.transition.current.x, this.transition.current.y);
 		}
-		
 
         // debug 
-        fill(204, 101, 192, 127);
-        stroke(127, 63, 120);
-        ellipse(this.hbHead.x, this.hbHead.y, this.hbHead.r)
-		ellipse(this.hbBelly.x, this.hbBelly.y, this.hbBelly.r)
+        //fill(204, 101, 192, 127);
+        //stroke(127, 63, 120);
+        //ellipse(this.hbHead.x, this.hbHead.y, this.hbHead.r)
+		//ellipse(this.hbBelly.x, this.hbBelly.y, this.hbBelly.r)
     }
 }

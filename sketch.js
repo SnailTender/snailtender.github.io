@@ -110,8 +110,8 @@ function setup() {
 		doughBoyImgWalk2,
 		doughBoyImgHead,
 		doughBoyImgBelly,
-        new HitBox(canvasWidth / 10, canvasHeight / 10, canvasHeight / 18),
-		new HitBox(canvasWidth / 10, canvasHeight / 20, canvasHeight / 18),
+        new HitBox(760, 250, 40),
+		new HitBox(850, 450, 100),
     );
 
     // On screen events
@@ -250,7 +250,7 @@ function onGameTimerTick(tickCount) {
         gs.events.push(flyBug);
     }
 	
-	if(tickCount == 3) {
+	if(tickCount == 10) {
 		gs.events.push(doughBoy);
 	}
 }
