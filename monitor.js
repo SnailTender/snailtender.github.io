@@ -81,9 +81,7 @@ function MonitorDisplay(img, deadImg, imgPressed, imgWin, frames) {
             }        
         }
 
-        if (this.timer.elapsed % 300 == 0) {
-            this.points += 1;
-        }
+        this.points += 1;
 
         if (this.pressed && this.timer.elapsed % 1200 == 0) {
             this.pressed = false;
