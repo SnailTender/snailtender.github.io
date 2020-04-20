@@ -6,10 +6,12 @@ function FlyBug(img, imgFlight, imgFlight2, imgSquash, hitbox) {
     this.hb = hitbox;
     this.done = false;
     this.hasBeenPressed = false;
-    this.transition = new Transition(canvasWidth, 0, canvasWidth - 400);
+    this.transition = new Transition(canvasWidth, 200, canvasWidth - 400);
     this.hobble = 0;
 	
 	flap = 0;
+	wait = 0;
+	newPosition = canvasWidth - 400;
 
     this.update = function () {
         if (this.transition.isTransitioning()) {
@@ -17,6 +19,15 @@ function FlyBug(img, imgFlight, imgFlight2, imgSquash, hitbox) {
             this.hobble = 10 / 2 + 10 * Math.sin(this.transition.current.x / 10);
         } else {
             this.hobble = 0;
+			
+			if(wait>=100) {
+				newPosition = Math.floor(Math.random() * Math.floor(canvasWidth));
+				this.transition = new Transition(this.transition.current.x, this.transition.current.y, newPosition);
+				this.transition.update();
+				wait=0;
+			} else {
+					wait+=1;
+			}
         }
 		
 		this.hb.y = this.transition.current.y + this.hobble + canvasHeight/15;
